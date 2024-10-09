@@ -3,11 +3,13 @@
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
-import tw from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 
 const Accordion = AccordionPrimitive.Root
 
-const AccordionItem = tw(AccordionPrimitive.Item)`border-b`
+const AccordionItem = styled(AccordionPrimitive.Item)`
+  ${tw`border-b border-b-slate-200 dark:border-b-slate-700`}
+`
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
@@ -17,8 +19,7 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       css={[
-        tw`flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline`,
-        tw`[&[data-state=open]>svg]:rotate-180`,
+        tw`flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180`,
         className
       ]}
       {...props}
@@ -37,8 +38,7 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     css={[
-      tw`overflow-hidden text-sm transition-all`,
-      tw`data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down`,
+      tw`overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down`,
       className
     ]}
     {...props}
