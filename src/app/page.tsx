@@ -3,6 +3,7 @@
 import tw from 'twin.macro';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const Container = tw.div`flex flex-col items-center justify-center min-h-screen py-2`;
 
@@ -11,14 +12,14 @@ export default function Home() {
     <Container>
       <main tw="w-full max-w-3xl mx-auto">
         <h1 tw="text-6xl font-bold mb-8">
-          Test 32
+          Test 33
         </h1>
         <Button tw="mb-8">Click me</Button>
-        <Accordion type="single" collapsible tw="w-full">
+        <Accordion type="single" collapsible tw="w-full mb-8">
           <AccordionItem value="item-1">
             <AccordionTrigger>Is it accessible?</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Yes? It adheres to the WAI-ARIA design pattern.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
@@ -34,6 +35,14 @@ export default function Home() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        <Alert tw="mb-8">
+          <AlertTitle>Heads up!</AlertTitle>
+          <AlertDescription>You can add components to your app using the cli.</AlertDescription>
+        </Alert>
+        <Alert variant="destructive">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+        </Alert>
       </main>
     </Container>
   );
