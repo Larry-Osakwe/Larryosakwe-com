@@ -9,18 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@openpanel/sdk": "^1.0.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.447.0",
+    "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.14"
+    "resend": "^4.0.0",
+    "stripe": "^17.1.0",
+    "tailwind-merge": "^2.5.3",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.20",
+    "babel-plugin-macros": "^3.1.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.14"
+    "eslint-config-next": "14.2.14",
+    "postcss": "^8.4.47",
+    "styled-components": "^6.1.13",
+    "tailwindcss": "^3.4.13",
+    "twin.macro": "^3.4.1",
+    "typescript": "^5"
   }
 }
