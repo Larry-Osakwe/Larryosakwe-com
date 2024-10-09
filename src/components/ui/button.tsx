@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import tw, { styled} from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 
-const baseButtonStyles = tw`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300`
+const BaseButton = tw.button`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300`
 
 const buttonVariants = {
   default: tw`bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90`,
@@ -20,19 +20,17 @@ const buttonSizes = {
   icon: tw`h-10 w-10`,
 }
 
-interface StyledButtonProps {
+const StyledButton = styled(BaseButton)<{ variant?: keyof typeof buttonVariants; size?: keyof typeof buttonSizes }>(
+  ({ variant = 'default', size = 'default' }) => [
+    buttonVariants[variant],
+    buttonSizes[size],
+  ]
+)
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean
   variant?: keyof typeof buttonVariants
   size?: keyof typeof buttonSizes
-}
-
-const StyledButton = styled.button<StyledButtonProps>(({ variant = 'default', size = 'default' }) => [
-  baseButtonStyles,
-  buttonVariants[variant],
-  buttonSizes[size],
-])
-
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, StyledButtonProps {
-  asChild?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
