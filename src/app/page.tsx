@@ -4,6 +4,17 @@ import tw from 'twin.macro';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Container = tw.div`flex flex-col items-center justify-center min-h-screen py-2`;
 
@@ -12,7 +23,7 @@ export default function Home() {
     <Container>
       <main tw="w-full max-w-3xl mx-auto">
         <h1 tw="text-6xl font-bold mb-8">
-          Test 33
+          Test 34
         </h1>
         <Button tw="mb-8">Click me</Button>
         <Accordion type="single" collapsible tw="w-full mb-8">
@@ -39,10 +50,28 @@ export default function Home() {
           <AlertTitle>Heads up!</AlertTitle>
           <AlertDescription>You can add components to your app using the cli.</AlertDescription>
         </Alert>
-        <Alert variant="destructive">
+        <Alert variant="destructive" tw="mb-8">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
         </Alert>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline">Show Alert Dialog</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your account
+                and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </main>
     </Container>
   );
