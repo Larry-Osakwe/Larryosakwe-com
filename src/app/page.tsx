@@ -1,6 +1,7 @@
 'use client'
 
 import tw from 'twin.macro';
+import { Button } from '@/components/ui/button';
 
 const Container = tw.div`flex flex-col items-center justify-center min-h-screen py-2`
 
@@ -17,6 +18,14 @@ export default function Home() {
             src/app/page.tsx
           </code>
         </p>
+        <div tw="mt-6 flex space-x-4">
+          <Button>Default Button</Button>
+          <Button variant="destructive">Destructive Button</Button>
+          <Button variant="outline">Outline Button</Button>
+          <Button variant="secondary">Secondary Button</Button>
+          <Button variant="ghost">Ghost Button</Button>
+          <Button variant="link">Link Button</Button>
+        </div>
       </main>
     </Container>
   )
