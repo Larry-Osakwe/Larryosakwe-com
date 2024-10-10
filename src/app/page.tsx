@@ -16,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 const Container = tw.div`flex flex-col items-center justify-center min-h-screen py-2`;
 
@@ -24,7 +25,7 @@ export default function Home() {
     <Container>
       <main tw="w-full max-w-3xl mx-auto">
         <h1 tw="text-6xl font-bold mb-8">
-          Test 36
+          Test 37
         </h1>
         <Button tw="mb-8">Click me</Button>
         <Accordion type="single" collapsible tw="w-full mb-8">
@@ -82,6 +83,12 @@ export default function Home() {
             <AvatarImage src="https://github.com/shadcn-invalid.png" alt="@invalid" />
             <AvatarFallback>IN</AvatarFallback>
           </Avatar>
+        </div>
+        <div tw="mt-8 flex space-x-2">
+          <Badge>Default</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="destructive">Destructive</Badge>
+          <Badge variant="outline">Outline</Badge>
         </div>
       </main>
     </Container>
