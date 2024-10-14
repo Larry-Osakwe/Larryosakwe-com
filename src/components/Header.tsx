@@ -45,31 +45,49 @@ const StyledNavigationMenuTrigger = styled(NavigationMenuTrigger)`
   }
 `
 
+const StyledNavigationMenuContent = styled(NavigationMenuContent)`
+  ${tw`p-4 w-[200px] rounded-md`}
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+`
+
+const StyledNavigationMenuList = styled(NavigationMenuList)`
+  ${tw`list-none p-0 m-0`}
+`
+
+const StyledNavigationMenuItem = styled(NavigationMenuItem)`
+  ${tw`mb-2`}
+`
+
 const Header: React.FC = () => {
   return (
     <HeaderWrapper>
       <Logo>Your Logo</Logo>
       <StyledNavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
+        <StyledNavigationMenuList>
+          <StyledNavigationMenuItem>
             <StyledNavigationMenuLink href="/">Home</StyledNavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
+          </StyledNavigationMenuItem>
+          <StyledNavigationMenuItem>
             <StyledNavigationMenuTrigger>About</StyledNavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul tw="p-4 w-[200px] bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-md">
-                <li><StyledNavigationMenuLink href="/about/team">Our Team</StyledNavigationMenuLink></li>
-                <li><StyledNavigationMenuLink href="/about/mission">Our Mission</StyledNavigationMenuLink></li>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
+            <StyledNavigationMenuContent>
+              <StyledNavigationMenuList>
+                <StyledNavigationMenuItem>
+                  <StyledNavigationMenuLink href="/about/team">Our Team</StyledNavigationMenuLink>
+                </StyledNavigationMenuItem>
+                <StyledNavigationMenuItem>
+                  <StyledNavigationMenuLink href="/about/mission">Our Mission</StyledNavigationMenuLink>
+                </StyledNavigationMenuItem>
+              </StyledNavigationMenuList>
+            </StyledNavigationMenuContent>
+          </StyledNavigationMenuItem>
+          <StyledNavigationMenuItem>
             <StyledNavigationMenuLink href="/services">Services</StyledNavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
+          </StyledNavigationMenuItem>
+          <StyledNavigationMenuItem>
             <StyledNavigationMenuLink href="/contact">Contact</StyledNavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
+          </StyledNavigationMenuItem>
+        </StyledNavigationMenuList>
       </StyledNavigationMenu>
     </HeaderWrapper>
   )
