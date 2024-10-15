@@ -16,7 +16,7 @@ import {
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./DarkMode/mode-toggle";
 import { config } from "../../config";
 
 // Styled components

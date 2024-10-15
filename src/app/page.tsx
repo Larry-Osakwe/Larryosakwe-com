@@ -2,7 +2,7 @@
 import * as React from "react"
 import tw from 'twin.macro';
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
+import { Hero } from "@/components/Hero/Hero";
 import { Sponsors } from "@/components/Sponsors";
 import { About } from "@/components/About";
 
