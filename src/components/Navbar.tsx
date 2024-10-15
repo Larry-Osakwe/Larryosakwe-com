@@ -1,4 +1,5 @@
 import { useState } from "react";
+import tw, { styled } from 'twin.macro';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,9 +17,27 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { config } from "../../config"; // Import the config
+import { config } from "../../config";
 
-// import { LogoIcon } from "./Icons";
+// Styled components
+const HeaderWrapper = tw.header`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`;
+const StyledNavigationMenu = styled(NavigationMenu)`${tw`mx-auto`}`;
+const StyledNavigationMenuList = styled(NavigationMenuList)`${tw`container h-14 px-4 w-screen flex justify-between`}`;
+const LogoMenuItem = styled(NavigationMenuItem)`${tw`font-bold flex`}`;
+const LogoLink = tw.a`ml-2 font-bold text-xl flex`;
+const MobileActions = tw.span`flex md:hidden`;
+const DesktopNav = tw.nav`hidden md:flex gap-2`;
+const DesktopActions = tw.div`hidden md:flex gap-2`;
+const MobileNavContent = tw.nav`flex flex-col justify-center items-center gap-2 mt-4`;
+const StyledSheetTrigger = styled(SheetTrigger)`${tw`px-2`}`;
+const MenuIcon = styled(Menu)`${tw`flex md:hidden h-5 w-5`}`;
+const SheetTitleWrapper = tw.div`font-bold text-xl`;
+const NavLink = styled.a<{ $isGithub?: boolean }>`
+  ${tw`text-[17px]`}
+  ${({ $isGithub }) => $isGithub && tw`border`}
+  ${({ $isGithub }) => $isGithub && tw`w-[110px]`}
+`;
+const StyledGitHubLogoIcon = styled(GitHubLogoIcon)`${tw`mr-2 w-5 h-5`}`;
 
 interface RouteProps {
   href: string;
@@ -26,122 +45,93 @@ interface RouteProps {
 }
 
 const routeList: RouteProps[] = [
-  {
-    href: "#features",
-    label: "Features",
-  },
-  {
-    href: "#testimonials",
-    label: "Testimonials",
-  },
-  {
-    href: "#pricing",
-    label: "Pricing",
-  },
-  {
-    href: "#faq",
-    label: "FAQ",
-  },
+  { href: "#features", label: "Features" },
+  { href: "#testimonials", label: "Testimonials" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
-      <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
-          <NavigationMenuItem className="font-bold flex">
-            <a
-              rel="noreferrer noopener"
-              href="/"
-              className="ml-2 font-bold text-xl flex"
-            >
-              {config.appName} {/* Use the appName from config */}
-            </a>
-          </NavigationMenuItem>
+    <HeaderWrapper>
+      <StyledNavigationMenu>
+        <StyledNavigationMenuList>
+          <LogoMenuItem>
+            <LogoLink href="/" rel="noreferrer noopener">
+              {config.appName}
+            </LogoLink>
+          </LogoMenuItem>
 
           {/* mobile */}
-          <span className="flex md:hidden">
+          <MobileActions>
             <ModeToggle />
-
-            <Sheet
-              open={isOpen}
-              onOpenChange={setIsOpen}
-            >
-              <SheetTrigger className="px-2">
-                <Menu
-                  className="flex md:hidden h-5 w-5"
-                  onClick={() => setIsOpen(true)}
-                  aria-label="Menu Icon"
-                >
-                </Menu>
-              </SheetTrigger>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <StyledSheetTrigger>
+                <MenuIcon onClick={() => setIsOpen(true)} aria-label="Menu Icon" />
+              </StyledSheetTrigger>
 
               <SheetContent side={"left"}>
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
-                    {config.appName} {/* Use the appName from config */}
+                  <SheetTitle>
+                    <SheetTitleWrapper>{config.appName}</SheetTitleWrapper>
                   </SheetTitle>
                 </SheetHeader>
-                <nav className="flex flex-col justify-center items-center gap-2 mt-4">
+                <MobileNavContent>
                   {routeList.map(({ href, label }: RouteProps) => (
-                    <a
-                      rel="noreferrer noopener"
+                    <NavLink
                       key={label}
                       href={href}
                       onClick={() => setIsOpen(false)}
                       className={buttonVariants({ variant: "ghost" })}
                     >
                       {label}
-                    </a>
+                    </NavLink>
                   ))}
-                  <a
-                    rel="noreferrer noopener"
+                  <NavLink
+                    $isGithub
                     href="https://github.com/leoMirandaa/shadcn-landing-page.git"
                     target="_blank"
-                    className={`w-[110px] border ${buttonVariants({
-                      variant: "secondary",
-                    })}`}
+                    rel="noreferrer noopener"
+                    className={buttonVariants({ variant: "secondary" })}
                   >
-                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
+                    <StyledGitHubLogoIcon />
                     Github
-                  </a>
-                </nav>
+                  </NavLink>
+                </MobileNavContent>
               </SheetContent>
             </Sheet>
-          </span>
+          </MobileActions>
 
           {/* desktop */}
-          <nav className="hidden md:flex gap-2">
+          <DesktopNav>
             {routeList.map((route: RouteProps, i) => (
-              <a
-                rel="noreferrer noopener"
-                href={route.href}
+              <NavLink
                 key={i}
-                className={`text-[17px] ${buttonVariants({
-                  variant: "ghost",
-                })}`}
+                href={route.href}
+                className={buttonVariants({ variant: "ghost" })}
               >
                 {route.label}
-              </a>
+              </NavLink>
             ))}
-          </nav>
+          </DesktopNav>
 
-          <div className="hidden md:flex gap-2">
-            <a
-              rel="noreferrer noopener"
+          <DesktopActions>
+            <NavLink
+              $isGithub
               href="https://github.com/leoMirandaa/shadcn-landing-page.git"
               target="_blank"
-              className={`border ${buttonVariants({ variant: "secondary" })}`}
+              rel="noreferrer noopener"
+              className={buttonVariants({ variant: "secondary" })}
             >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
+              <StyledGitHubLogoIcon />
               Github
-            </a>
-
+            </NavLink>
             <ModeToggle />
-          </div>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </header>
+          </DesktopActions>
+        </StyledNavigationMenuList>
+      </StyledNavigationMenu>
+    </HeaderWrapper>
   );
 };
