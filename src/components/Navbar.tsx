@@ -16,6 +16,8 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
+import { config } from "../../config"; // Import the config
+
 // import { LogoIcon } from "./Icons";
 
 interface RouteProps {
@@ -54,8 +56,7 @@ export const Navbar = () => {
               href="/"
               className="ml-2 font-bold text-xl flex"
             >
-              {/* <LogoIcon /> */}
-              Larry Osakwe
+              {config.appName} {/* Use the appName from config */}
             </a>
           </NavigationMenuItem>
 
@@ -79,7 +80,7 @@ export const Navbar = () => {
               <SheetContent side={"left"}>
                 <SheetHeader>
                   <SheetTitle className="font-bold text-xl">
-                    Shadcn/React
+                    {config.appName} {/* Use the appName from config */}
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
