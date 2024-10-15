@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   NavigationMenu,
@@ -13,10 +12,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-// import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
-// import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./mode-toggle";
 // import { LogoIcon } from "./Icons";
 
 interface RouteProps {
@@ -62,7 +61,7 @@ export const Navbar = () => {
 
           {/* mobile */}
           <span className="flex md:hidden">
-            {/* <ModeToggle /> */}
+            <ModeToggle />
 
             <Sheet
               open={isOpen}
@@ -72,8 +71,8 @@ export const Navbar = () => {
                 <Menu
                   className="flex md:hidden h-5 w-5"
                   onClick={() => setIsOpen(true)}
+                  aria-label="Menu Icon"
                 >
-                  <span className="sr-only">Menu Icon</span>
                 </Menu>
               </SheetTrigger>
 
@@ -103,7 +102,7 @@ export const Navbar = () => {
                       variant: "secondary",
                     })}`}
                   >
-                    {/* <GitHubLogoIcon className="mr-2 w-5 h-5" /> */}
+                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
                     Github
                   </a>
                 </nav>
@@ -134,11 +133,11 @@ export const Navbar = () => {
               target="_blank"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
-              {/* <GitHubLogoIcon className="mr-2 w-5 h-5" /> */}
+              <GitHubLogoIcon className="mr-2 w-5 h-5" />
               Github
             </a>
 
-            {/* <ModeToggle /> */}
+            <ModeToggle />
           </div>
         </NavigationMenuList>
       </NavigationMenu>
