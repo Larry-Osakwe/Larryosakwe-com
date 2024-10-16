@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 
-export const Cta = () => {
+export const CTA = () => {
   return (
     <section
       id="cta"
