@@ -40,12 +40,8 @@ const NavLink = styled.a<{ $isGithub?: boolean }>`
 `;
 const StyledGitHubLogoIcon = styled(GitHubLogoIcon)`${tw`mr-2 w-5 h-5`}`;
 
-interface RouteProps {
-  href: string;
-  label: string;
-}
-
-const routeList: RouteProps[] = [
+// Navigation items
+const navItems = [
   { href: "#features", label: "Features" },
   { href: "#testimonials", label: "Testimonials" },
   { href: "#pricing", label: "Pricing" },
@@ -61,6 +57,7 @@ export const Navbar = () => {
         <StyledNavigationMenuList>
           <LogoMenuItem>
             <LogoLink href="/" rel="noreferrer noopener">
+              {/* TODO: Customize your logo in the Icons.tsx file */}
               <LogoIcon />
               <span>{config.appName}</span>
             </LogoLink>
@@ -82,19 +79,19 @@ export const Navbar = () => {
                   </SheetTitle>
                 </SheetHeader>
                 <MobileNavContent>
-                  {routeList.map(({ href, label }: RouteProps) => (
+                  {navItems.map((route, i) => (
                     <NavLink
-                      key={label}
-                      href={href}
+                      key={i}
+                      href={route.href}
                       onClick={() => setIsOpen(false)}
                       className={buttonVariants({ variant: "ghost" })}
                     >
-                      {label}
+                      {route.label}
                     </NavLink>
                   ))}
                   <NavLink
                     $isGithub
-                    href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                    href={config.githubUrl}
                     target="_blank"
                     rel="noreferrer noopener"
                     className={buttonVariants({ variant: "secondary" })}
@@ -109,7 +106,7 @@ export const Navbar = () => {
 
           {/* desktop */}
           <DesktopNav>
-            {routeList.map((route: RouteProps, i) => (
+            {navItems.map((route, i) => (
               <NavLink
                 key={i}
                 href={route.href}
@@ -123,7 +120,7 @@ export const Navbar = () => {
           <DesktopActions>
             <NavLink
               $isGithub
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+              href={config.githubUrl}
               target="_blank"
               rel="noreferrer noopener"
               className={buttonVariants({ variant: "secondary" })}

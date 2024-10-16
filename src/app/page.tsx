@@ -33,7 +33,7 @@ export default function Home() {
     <Newsletter />
     <FAQ />
     <Footer />
-    hi. hello
+    hi. hello. goodbye
     <ScrollToTop />
     </>
   );

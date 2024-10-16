@@ -1,7 +1,17 @@
 export const config = {
+  // TODO: Replace with your app name
   appName: "FLARESTACK",
-  // You can add more configuration options here as needed
-  // For example:
-  // githubUrl: "https://github.com/yourusername",
-  // navItems: [...],
+  appDescription: "Your app description here",
+  domainName: "flarestack.io",
+
+  // External service configurations
+  githubUrl: "https://github.com/yourusername/your-repo",
+
+  // Authentication paths
+  auth: {
+    loginUrl: "/signin",
+    callbackUrl: "/dashboard",
+  },
+
+  // Add other app-wide configurations here
 };
