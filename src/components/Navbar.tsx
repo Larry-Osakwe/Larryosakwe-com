@@ -43,8 +43,8 @@ const StyledGitHubLogoIcon = styled(GitHubLogoIcon)`${tw`mr-2 w-5 h-5`}`;
 // Navigation items
 const navItems = [
   { href: "#features", label: "Features" },
-  { href: "#testimonials", label: "Testimonials" },
   { href: "#pricing", label: "Pricing" },
+  { href: "#testimonials", label: "Testimonials" },
   { href: "#faq", label: "FAQ" },
 ];
 

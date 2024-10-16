@@ -25,13 +25,16 @@ export default function Home() {
     <About />
     <HowItWorks />
     <Features />
-    <Services />
-    <CTA />
-    <Testimonials />
-    <Team />
     <Pricing />
-    <Newsletter />
+    <Testimonials />
+    <Services />
     <FAQ />
+    <CTA />
+    
+    <Team />
+    
+    <Newsletter />
+    
     <Footer />
     hi. hello. goodbye
     <ScrollToTop />
