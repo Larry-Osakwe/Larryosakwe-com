@@ -7,6 +7,8 @@ import { Sponsors } from "@/components/Sponsors";
 import { About } from "@/components/About/About";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Features } from "@/components/Features";
+import { Services } from "@/components/Services";
+import { Cta } from "@/components/Cta";
 const Container = tw.div`flex flex-col items-center justify-center min-h-screen py-2`;
 
 export default function Home() {
@@ -17,8 +19,12 @@ export default function Home() {
     <Sponsors />
     <About />
     <HowItWorks />
-    <Container>
     <Features />
+    <Services />
+    <Container>
+    <Cta />
+    
+
       hi
     </Container>
     </>
