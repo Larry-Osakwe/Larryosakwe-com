@@ -2,7 +2,6 @@
 import * as React from "react";
 import { SVGProps } from "react";
 import Image from 'next/image';
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 // TODO: Replace this SVG with your own logo
 // You can create and edit SVGs at https://www.svgviewer.dev/
@@ -100,12 +99,13 @@ export const LogoIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => (
 
 // If you prefer to use an image logo, uncomment the following and comment out the SVG version above
 // export const LogoIcon: React.FC<{ className?: string }> = ({ className }) => (
-//   <AspectRatio ratio={1 / 1} className={`w-6 mr-2 ${className || ''}`}>
+//   <div className={`relative w-8 h-8 mr-2 ${className || ''}`}>
 //     <Image
 //       src="/path-to-your-logo.png"
 //       alt="Logo"
 //       layout="fill"
 //       objectFit="contain"
+//       priority
 //     />
-//   </AspectRatio>
+//   </div>
 // );
