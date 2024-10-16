@@ -17,6 +17,7 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./DarkMode/mode-toggle";
+import { LogoIcon } from "./Icons";
 import { config } from "../../config";
 
 // Styled components
@@ -60,7 +61,8 @@ export const Navbar = () => {
         <StyledNavigationMenuList>
           <LogoMenuItem>
             <LogoLink href="/" rel="noreferrer noopener">
-              {config.appName}
+              <LogoIcon />
+              <span>{config.appName}</span>
             </LogoLink>
           </LogoMenuItem>
 
@@ -74,6 +76,7 @@ export const Navbar = () => {
 
               <SheetContent side={"left"}>
                 <SheetHeader>
+                  <LogoIcon />
                   <SheetTitle>
                     <SheetTitleWrapper>{config.appName}</SheetTitleWrapper>
                   </SheetTitle>
