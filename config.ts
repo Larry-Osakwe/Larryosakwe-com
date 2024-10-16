@@ -1,6 +1,6 @@
 export const config = {
   // TODO: Replace with your app name
-  appName: "FLARESTACK",
+  appName: "FlareStack",
   appDescription: "Your app description here",
   domainName: "flarestack.io",
 

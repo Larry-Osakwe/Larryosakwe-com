@@ -13,12 +13,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./DarkMode/mode-toggle";
 import { LogoIcon } from "./Icons";
 import { config } from "../../config";
+import { CheckoutButton } from "./CheckoutButton";
 
 // Styled components
 const HeaderWrapper = tw.header`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`;
@@ -33,12 +33,7 @@ const MobileNavContent = tw.nav`flex flex-col justify-center items-center gap-2 
 const StyledSheetTrigger = styled(SheetTrigger)`${tw`px-2`}`;
 const MenuIcon = styled(Menu)`${tw`flex md:hidden h-5 w-5`}`;
 const SheetTitleWrapper = tw.div`font-bold text-xl`;
-const NavLink = styled.a<{ $isGithub?: boolean }>`
-  ${tw`text-[17px]`}
-  ${({ $isGithub }) => $isGithub && tw`border`}
-  ${({ $isGithub }) => $isGithub && tw`w-[110px]`}
-`;
-const StyledGitHubLogoIcon = styled(GitHubLogoIcon)`${tw`mr-2 w-5 h-5`}`;
+const NavLink = styled.a`${tw`text-[17px]`}`;
 
 // Navigation items
 const navItems = [
@@ -59,7 +54,7 @@ export const Navbar = () => {
             <LogoLink href="/" rel="noreferrer noopener">
               {/* TODO: Customize your logo in the Icons.tsx file */}
               <LogoIcon />
-              <span>{config.appName}</span>
+              <span>{config.appName.toUpperCase()}</span>
             </LogoLink>
           </LogoMenuItem>
 
@@ -89,16 +84,7 @@ export const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
-                  <NavLink
-                    $isGithub
-                    href={config.githubUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={buttonVariants({ variant: "secondary" })}
-                  >
-                    <StyledGitHubLogoIcon />
-                    Github
-                  </NavLink>
+                  <CheckoutButton />
                 </MobileNavContent>
               </SheetContent>
             </Sheet>
@@ -118,16 +104,7 @@ export const Navbar = () => {
           </DesktopNav>
 
           <DesktopActions>
-            <NavLink
-              $isGithub
-              href={config.githubUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              <StyledGitHubLogoIcon />
-              Github
-            </NavLink>
+            <CheckoutButton />
             <ModeToggle />
           </DesktopActions>
         </StyledNavigationMenuList>
