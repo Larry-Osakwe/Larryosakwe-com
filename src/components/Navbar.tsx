@@ -20,7 +20,8 @@ import { LogoIcon } from "./Icons";
 import { config } from "../../config";
 import { CheckoutButton } from "./CheckoutButton";
 
-// Styled components
+// Styled components using twin.macro
+// You can customize these styles by modifying the tw`` template literals with tailwind classes
 const HeaderWrapper = tw.header`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`;
 const StyledNavigationMenu = styled(NavigationMenu)`${tw`mx-auto`}`;
 const StyledNavigationMenuList = styled(NavigationMenuList)`${tw`container h-14 px-4 w-screen flex justify-between`}`;
@@ -35,7 +36,7 @@ const MenuIcon = styled(Menu)`${tw`flex md:hidden h-5 w-5`}`;
 const SheetTitleWrapper = tw.div`font-bold text-xl`;
 const NavLink = styled.a`${tw`text-[17px]`}`;
 
-// Navigation items
+// TODO: Customize your navigation items here
 const navItems = [
   { href: "#features", label: "Features" },
   { href: "#pricing", label: "Pricing" },
@@ -50,6 +51,7 @@ export const Navbar = () => {
     <HeaderWrapper>
       <StyledNavigationMenu>
         <StyledNavigationMenuList>
+          {/* Logo and App Name */}
           <LogoMenuItem>
             <LogoLink href="/" rel="noreferrer noopener">
               {/* TODO: Customize your logo in the Icons.tsx file */}
@@ -58,7 +60,7 @@ export const Navbar = () => {
             </LogoLink>
           </LogoMenuItem>
 
-          {/* mobile */}
+          {/* Mobile Navigation */}
           <MobileActions>
             <ModeToggle />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -74,6 +76,7 @@ export const Navbar = () => {
                   </SheetTitle>
                 </SheetHeader>
                 <MobileNavContent>
+                  {/* TODO: Customize mobile navigation items here */}
                   {navItems.map((route, i) => (
                     <NavLink
                       key={i}
@@ -90,8 +93,9 @@ export const Navbar = () => {
             </Sheet>
           </MobileActions>
 
-          {/* desktop */}
+          {/* Desktop Navigation */}
           <DesktopNav>
+            {/* TODO: Customize desktop navigation items here */}
             {navItems.map((route, i) => (
               <NavLink
                 key={i}
@@ -103,6 +107,7 @@ export const Navbar = () => {
             ))}
           </DesktopNav>
 
+          {/* Desktop Actions (e.g., Checkout Button, Theme Toggle) */}
           <DesktopActions>
             <CheckoutButton />
             <ModeToggle />
