@@ -1,8 +1,7 @@
 import { Button } from "../ui/button";
 import { buttonVariants } from "../ui/button";
-import { HeroCards } from "./HeroCards";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-
+import Image from 'next/image';
 export const Hero = () => {
   return (
     <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
@@ -45,9 +44,16 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Hero cards sections */}
-      <div className="z-10">
-        <HeroCards />
+      {/* Hero image section */}
+      <div className="z-10 w-full h-full relative">
+        <Image
+          src="/hero-image.svg"
+          alt="Hero Image"
+          layout="responsive"
+          width={700}
+          height={500}
+          priority
+        />
       </div>
 
       {/* Shadow effect */}
