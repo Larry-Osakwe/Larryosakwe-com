@@ -24,7 +24,7 @@ const LogoWrapper = styled.span`
 // TODO: Customize the checkout button configuration as needed
 const checkoutButtonConfig = {
   label: `Get ${config.appName}`,
-  showLogo: true,
+  showLogo: false,
 };
 
 interface CheckoutButtonProps {
