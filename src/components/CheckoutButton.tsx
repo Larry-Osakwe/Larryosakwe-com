@@ -16,7 +16,7 @@ const StyledButton = styled(Button)`
 `;
 
 const LogoWrapper = styled.span`
-  ${tw`w-4 h-4 mr-2`}
+  ${tw`w-6 h-6 mr-2`}
   // Customize the logo wrapper styles here
 `;
 
@@ -24,7 +24,7 @@ const LogoWrapper = styled.span`
 // TODO: Customize the checkout button configuration as needed
 const checkoutButtonConfig = {
   label: `Get ${config.appName}`,
-  showLogo: false,
+  showLogo: true,
 };
 
 interface CheckoutButtonProps {
