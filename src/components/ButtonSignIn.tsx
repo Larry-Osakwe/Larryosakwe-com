@@ -30,7 +30,7 @@ const StyledAvatar = styled(Avatar)`
 const signInButtonConfig = {
   label: 'Sign In',
   showAvatar: false,
-  route: '/login',
+  route: '/signup',
 };
 
 interface ButtonSignInProps {
