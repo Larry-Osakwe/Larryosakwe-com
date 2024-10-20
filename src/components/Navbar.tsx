@@ -19,6 +19,7 @@ import { ModeToggle } from "./DarkMode/mode-toggle";
 import { LogoIcon } from "./Icons";
 import { config } from "../../config";
 import { ButtonCheckout } from "./ButtonCheckout";
+import ButtonSignIn from "./ButtonSignIn";
 
 // Styled components using twin.macro
 // You can customize these styles by modifying the tw`` template literals with tailwind classes
@@ -110,6 +111,7 @@ export const Navbar = () => {
           {/* Desktop Actions (e.g., Checkout Button, Theme Toggle) */}
           <DesktopActions>
             <ButtonCheckout />
+            <ButtonSignIn />
             <ModeToggle />
           </DesktopActions>
         </StyledNavigationMenuList>
