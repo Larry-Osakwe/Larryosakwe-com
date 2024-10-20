@@ -18,7 +18,7 @@ import { Menu } from "lucide-react";
 import { ModeToggle } from "./DarkMode/mode-toggle";
 import { LogoIcon } from "./Icons";
 import { config } from "../../config";
-import { CheckoutButton } from "./CheckoutButton";
+import { ButtonCheckout } from "./ButtonCheckout";
 
 // Styled components using twin.macro
 // You can customize these styles by modifying the tw`` template literals with tailwind classes
@@ -87,7 +87,7 @@ export const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
-                  <CheckoutButton />
+                  <ButtonCheckout />
                 </MobileNavContent>
               </SheetContent>
             </Sheet>
@@ -109,7 +109,7 @@ export const Navbar = () => {
 
           {/* Desktop Actions (e.g., Checkout Button, Theme Toggle) */}
           <DesktopActions>
-            <CheckoutButton />
+            <ButtonCheckout />
             <ModeToggle />
           </DesktopActions>
         </StyledNavigationMenuList>

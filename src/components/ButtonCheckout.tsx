@@ -27,13 +27,13 @@ const checkoutButtonConfig = {
   showLogo: true,
 };
 
-interface CheckoutButtonProps {
+interface ButtonCheckoutProps {
   label?: string;
   showLogo?: boolean;
   className?: string;
 }
 
-export const CheckoutButton: React.FC<CheckoutButtonProps> = ({
+export const ButtonCheckout: React.FC<ButtonCheckoutProps> = ({
   label = checkoutButtonConfig.label,
   showLogo = checkoutButtonConfig.showLogo,
   className,

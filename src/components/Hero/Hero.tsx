@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
-import { CheckoutButton } from "../CheckoutButton";
+import { ButtonCheckout } from "../ButtonCheckout";
 
 // Styled components using twin.macro
 const HeroSection = tw.section`container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10`;
@@ -36,7 +36,7 @@ export const Hero = () => {
         </Paragraph>
 
         <ButtonWrapper>
-          <CheckoutButton className="w-full md:w-1/3"/>
+          <ButtonCheckout className="w-full md:w-1/3"/>
         </ButtonWrapper>
       </ContentWrapper>
 
