@@ -99,6 +99,17 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
           </Button>
         </div>
       </form>
+      {type === 'login' && (
+        <p className="px-8 text-center text-sm text-muted-foreground">
+          Forgot password?{" "}
+          <Link
+            href="/reset-password"
+            className="underline underline-offset-4 hover:text-primary"
+          >
+            Reset my password
+          </Link>
+        </p>
+      )}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
