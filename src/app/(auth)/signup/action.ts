@@ -1,3 +1,5 @@
+"use server"
+
 import { createClient } from "@/lib/supabase/supabaseServer";
 
 export const registerUser = async ({
@@ -6,7 +8,6 @@ export const registerUser = async ({
   }: {
     email: string;
     password: string;
-    passwordConfirm: string;
   }) => {
   
     // supabase authentication from here

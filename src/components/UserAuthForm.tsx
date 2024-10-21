@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/Icons"
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { registerUser } from "@/app/(auth)/signup/action"
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
   type: 'login' | 'signup'
@@ -15,14 +17,33 @@ type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [error, setError] = React.useState<string | null>(null)
+  const router = useRouter()
 
-  async function onSubmit(event: React.SyntheticEvent) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsLoading(true)
+    setError(null)
 
-    setTimeout(() => {
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+
+    if (type === 'signup') {
+      const result = await registerUser({ email, password })
+      
+      if (result.error) {
+        setError(result.message)
+        setIsLoading(false)
+      } else {
+        // Redirect to confirmation page
+        router.push('/signup/confirmation')
+      }
+    } else {
+      // Handle login logic here (to be implemented later)
+      console.log('Login not implemented yet')
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -35,12 +56,14 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
+              name="email"
               placeholder="name@example.com"
               type="email"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              required
             />
           </div>
           <div className="grid gap-1">
@@ -49,14 +72,19 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="password"
+              name="password"
               placeholder="Password"
               type="password"
               autoCapitalize="none"
               autoComplete="current-password"
               autoCorrect="off"
               disabled={isLoading}
+              required
             />
           </div>
+          {error && (
+            <p className="text-sm text-red-500">{error}</p>
+          )}
           <Button disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
