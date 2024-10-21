@@ -5,16 +5,16 @@ import LogoutButton from "./LogoutButton";
 
 export default async function Dashboard() {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const { data: { user }, error } = await supabase.auth.getUser();
+
+  if (error || !user) {
     redirect("/login");
   }
 
   return (
     <>
       <div>Dashboard</div>
-      <p>Hello {data.user.email}</p>
-
+      <p>Hello {user.email}</p>
       <LogoutButton />
     </>
   );

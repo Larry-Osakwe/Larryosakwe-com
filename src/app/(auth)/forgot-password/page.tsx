@@ -25,7 +25,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { forgotPassword } from "./action";
+import { forgotPassword } from "../actions";
 
 export default function ForgotPassword() {
     const searchParams = useSearchParams();

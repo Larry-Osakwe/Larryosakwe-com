@@ -18,14 +18,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { resetPasswordFunc } from "./action";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
+import { resetPassword } from "../../actions";
 
 export default function ResetPassword() {
 
@@ -45,9 +42,8 @@ export default function ResetPassword() {
         setIsLoading(true); // Set loading to true when submission starts
     
         try {
-          const response = await resetPasswordFunc({
-            password: data.password,
-            passwordConfirm: data.passwordConfirm,
+          const response = await resetPassword({
+            password: data.password
           });
     
           if (response.error) {
