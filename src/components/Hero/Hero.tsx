@@ -45,7 +45,6 @@ export const Hero = () => {
         <Image
           src="/hero-image.svg"
           alt="FlareStack Hero Image"
-          layout="responsive"
           width={700}
           height={500}
           priority
