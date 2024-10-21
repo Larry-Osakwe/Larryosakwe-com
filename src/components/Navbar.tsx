@@ -110,7 +110,6 @@ export const Navbar = () => {
 
           {/* Desktop Actions (e.g., Checkout Button, Theme Toggle) */}
           <DesktopActions>
-            <ButtonCheckout />
             <ButtonSignIn />
             <ModeToggle />
           </DesktopActions>
