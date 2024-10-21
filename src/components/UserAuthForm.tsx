@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { registerUser } from "@/app/(auth)/signup/action"
+import { loginUser } from "@/app/(auth)/login/action"
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
   type: 'login' | 'signup'
@@ -40,9 +41,14 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         router.push('/signup/confirmation')
       }
     } else {
-      // Handle login logic here (to be implemented later)
-      console.log('Login not implemented yet')
-      setIsLoading(false)
+      const result = await loginUser({ email, password })
+      
+      if (result?.error) {
+        setError(result.message)
+        setIsLoading(false)
+      } else {
+        router.push('/dashboard')
+      }
     }
   }
 

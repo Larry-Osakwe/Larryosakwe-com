@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <AuthLayout
-      heading="Login to your account"
-      subheading="Enter your email below to login to your account"
+      heading="Welcome back"
+      subheading="Enter your credentials to access your account"
       showImage={true} // Set this to false to hide the image
     >
       <UserAuthForm type="login" />
