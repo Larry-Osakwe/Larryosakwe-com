@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { registerUser } from "@/app/(auth)/signup/action"
 import { loginUser } from "@/app/(auth)/login/action"
+import GoogleSignin from "@/app/(auth)/login/GoogleSignin"
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
   type: 'login' | 'signup'
@@ -103,7 +104,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         <p className="px-8 text-center text-sm text-muted-foreground">
           Forgot password?{" "}
           <Link
-            href="/reset-password"
+            href="/forgot-password"
             className="underline underline-offset-4 hover:text-primary"
           >
             Reset my password
@@ -120,14 +121,15 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
+      {/* <Button variant="outline" type="button" disabled={isLoading}>
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />
         )}{" "}
         Google
-      </Button>
+      </Button> */}
+      <GoogleSignin />
       <p className="px-8 text-center text-sm text-muted-foreground">
         {type === 'login' 
           ? "Don't have an account? "
