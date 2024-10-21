@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/DarkMode/theme-provider";
-import { config } from "../../config"; // Import the config
+import { config } from "@/config"
 
 export const metadata: Metadata = {
   title: config.appName,

@@ -2,7 +2,7 @@ import React from 'react';
 import tw, { styled } from 'twin.macro';
 import { Button } from '@/components/ui/button';
 import { LogoIcon } from './Icons';
-import { config } from '../../config';
+import { config } from "@/config"
 
 // Note: This component uses twin.macro for styling. 
 // To customize styles, modify the tw`` template literals in the styled components section.

@@ -2,8 +2,7 @@ import React from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import { LogoIcon } from "@/components/Icons"
-import { config } from '../../config'
-
+import { config } from "@/config"
 
 interface AuthLayoutProps {
   children: React.ReactNode

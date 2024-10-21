@@ -17,7 +17,7 @@ import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./DarkMode/mode-toggle";
 import { LogoIcon } from "./Icons";
-import { config } from "../../config";
+import { config } from "@/config"
 import { ButtonCheckout } from "./ButtonCheckout";
 import ButtonSignIn from "./ButtonSignIn";
 
