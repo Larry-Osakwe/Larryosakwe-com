@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-export default function GoogleSignin() {
+export default function GoogleSignIn() {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 

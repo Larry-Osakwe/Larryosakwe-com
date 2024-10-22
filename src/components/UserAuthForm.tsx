@@ -11,11 +11,10 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/Icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { registerUser } from "@/app/(auth)/actions"
 import { loginUser } from "@/app/(auth)/actions"
-import GoogleSignin from "@/components/GoogleSignin"
+import GoogleSignIn from "@/components/GoogleSignIn"
 
 // Define the form schema
 const formSchema = z.object({
@@ -148,7 +147,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <GoogleSignin />
+      <GoogleSignIn />
       <p className="px-8 text-center text-sm text-muted-foreground">
         {type === 'login' 
           ? "Don't have an account? "
