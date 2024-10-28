@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { ButtonCheckout } from "./ButtonCheckout";
 
 enum PopularPlanType {
   NO = 0,
@@ -121,7 +122,8 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              {/* <Button className="w-full">{pricing.buttonText}</Button> */}
+              <ButtonCheckout />
             </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />

@@ -1,8 +1,12 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import tw, { styled } from 'twin.macro';
 import { Button } from '@/components/ui/button';
 import { LogoIcon } from './Icons';
-import { config } from "@/config"
+import { config } from "@/config";
+import { Loader2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 // Note: This component uses twin.macro for styling. 
 // To customize styles, modify the tw`` template literals in the styled components section.
@@ -38,9 +42,35 @@ export const ButtonCheckout: React.FC<ButtonCheckoutProps> = ({
   showLogo = checkoutButtonConfig.showLogo,
   className,
 }) => {
-  const handleCheckout = () => {
-    // TODO: Implement Stripe checkout logic here
-    console.log('Checkout button clicked');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/stripe/create-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -48,13 +78,16 @@ export const ButtonCheckout: React.FC<ButtonCheckoutProps> = ({
       onClick={handleCheckout}
       className={className}
       variant="default"
+      disabled={isLoading}
     >
-      {showLogo && (
+      {isLoading ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      ) : showLogo && (
         <LogoWrapper>
           <LogoIcon />
         </LogoWrapper>
       )}
-      {label}
+      {isLoading ? "Loading..." : label}
     </StyledButton>
   );
 };

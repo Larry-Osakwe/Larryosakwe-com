@@ -6,7 +6,7 @@ export const config = {
   // REQUIRED: Your domain name (No http:// or https://, no trailing slash, no www, just the naked domain)
   domainName: "flarestack.io",
   stripe: {
-
+    priceId: "price_1QEiQ5B17jeLyvdz3lfySqRh",
   },
 
   // Authentication paths
