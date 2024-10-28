@@ -5,6 +5,9 @@ import tw, { styled } from 'twin.macro';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from 'next/navigation';
+import { User } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
+import { getUser } from '@/lib/supabase/supabaseClient';
 
 // Note: This component uses twin.macro for styling. 
 // To customize styles, modify the tw`` template literals in the styled components section.
@@ -25,48 +28,63 @@ const StyledAvatar = styled(Avatar)`
   ${tw`w-full h-full`}
 `;
 
-// Configure the sign-in button
-// TODO: Customize the sign-in button configuration as needed
-const signInButtonConfig = {
-  label: 'Sign In',
-  showAvatar: false,
-  route: '/signup',
-};
-
 interface ButtonSignInProps {
-  label?: string;
-  showAvatar?: boolean;
   className?: string;
   route?: string;
 }
 
 export const ButtonSignIn: React.FC<ButtonSignInProps> = ({
-  label = signInButtonConfig.label,
-  showAvatar = signInButtonConfig.showAvatar,
   className,
-  route = signInButtonConfig.route,
+  route = '/signup',
 }) => {
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
 
-  const handleSignIn = () => {
-    router.push(route);
+  useEffect(() => {
+    getUser().then(setUser);
+  }, []);
+
+  const handleClick = () => {
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push(route);
+    }
+  };
+
+  const getDisplayName = () => {
+    if (!user) return 'Sign In';
+    const metadata = user.user_metadata;
+    return metadata?.name || metadata?.full_name || user.email;
+  };
+
+  const getAvatarFallback = () => {
+    if (!user?.email) return '';
+    return user.email[0].toUpperCase();
   };
 
   return (
     <StyledButton
-      onClick={handleSignIn}
+      onClick={handleClick}
       className={className}
       variant="default"
     >
-      {showAvatar && (
-        <AvatarWrapper>
-          <StyledAvatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
-            <AvatarFallback>CN</AvatarFallback>
-          </StyledAvatar>
-        </AvatarWrapper>
+      {user ? (
+        <>
+          <AvatarWrapper>
+            <StyledAvatar>
+              <AvatarImage 
+                src={user.user_metadata.avatar_url || user.user_metadata.picture} 
+                alt="User avatar" 
+              />
+              <AvatarFallback>{getAvatarFallback()}</AvatarFallback>
+            </StyledAvatar>
+          </AvatarWrapper>
+          {getDisplayName()}
+        </>
+      ) : (
+        'Sign In'
       )}
-      {label}
     </StyledButton>
   );
 };
