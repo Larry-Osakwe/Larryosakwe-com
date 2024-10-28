@@ -28,6 +28,10 @@ const StyledAvatar = styled(Avatar)`
   ${tw`w-full h-full`}
 `;
 
+const StyledAvatarFallback = styled(AvatarFallback)`
+  ${tw`font-medium text-secondary-foreground`}
+`;
+
 interface ButtonSignInProps {
   className?: string;
   route?: string;
@@ -77,7 +81,9 @@ export const ButtonSignIn: React.FC<ButtonSignInProps> = ({
                 src={user.user_metadata.avatar_url || user.user_metadata.picture} 
                 alt="User avatar" 
               />
-              <AvatarFallback>{getAvatarFallback()}</AvatarFallback>
+              <StyledAvatarFallback>
+                {getAvatarFallback()}
+              </StyledAvatarFallback>
             </StyledAvatar>
           </AvatarWrapper>
           {getDisplayName()}
