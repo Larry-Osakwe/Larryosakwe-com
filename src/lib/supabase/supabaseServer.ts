@@ -26,3 +26,16 @@ export function createClient() {
     }
   );
 }
+
+export async function getUser() {
+  const supabase = createClient();
+  const { data: { user }, error } = await supabase.auth.getUser();
+
+  return user;
+}
+
+export async function isLoggedIn() {
+  const user = await getUser();
+
+  if (!user) throw new Error("Unauthorized");
+}
