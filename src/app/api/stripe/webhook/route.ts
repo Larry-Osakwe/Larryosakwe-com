@@ -1,84 +1,134 @@
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { config } from "@/config";
 import { stripe } from "@/lib/stripe/stripeClient";
-import { createClient } from "@/lib/supabase/supabaseServer";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createClient } from "@/lib/supabase/supabaseServer";
 
-export async function POST(req: Request) {
-  const body = await req.text();
-  const signature = headers().get("Stripe-Signature") as string;
+export async function POST(request: NextRequest) {
+  const body = await request.text();
+  const signature = headers().get("stripe-signature");
 
-  let event: Stripe.Event;
+  let event;
+  let eventType;
 
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Webhook error" },
-      { status: 400 }
-    );
-  }
-
-  const supabase = createClient();
+  const supabase = createClient(true);
 
   try {
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
-        
-        // Update user's subscription status in your database
-        if (session.customer_email) {
-          const { error } = await supabase
-            .from('profiles')  // or whatever your table name is
-            .update({ 
-              subscription_status: 'active',
-              stripe_customer_id: session.customer,
-              // Add any other relevant fields
-            })
-            .eq('email', session.customer_email);
-
-          if (error) throw error;
-        }
-        break;
-      }
-
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
-        
-        // Update subscription status
-        const { error } = await supabase
-          .from('profiles')
-          .update({ 
-            subscription_status: subscription.status,
-            // Add any other relevant fields
-          })
-          .eq('stripe_customer_id', subscription.customer);
-
-        if (error) throw error;
-        break;
-      }
-
-      // Add other webhook events as needed
-      // https://stripe.com/docs/api/events/types
+    if (!signature) {
+      throw new Error('No signature found');
     }
-
-    return NextResponse.json({ received: true });
-  } catch (error) {
-    console.error('Webhook error:', error);
-    return NextResponse.json(
-      { message: "Webhook handler failed" },
-      { status: 500 }
-    );
+    event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_SIGNING_SECRET!);
+  } catch (err: any) {
+    console.error(`Webhook signature verification failed. ${err.message}`);
+    return new Response(`Webhook error: ${err.message}`, { status: 400 });
   }
-}
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable body parsing, need raw body for Stripe webhook
-  },
-};
+
+  eventType = event.type;
+
+  try {
+    switch (eventType) {
+      case 'checkout.session.completed': {
+        const checkoutSession = event.data.object as Stripe.Checkout.Session;
+        const session = await stripe.checkout.sessions.retrieve(checkoutSession.id, {
+          expand: ['line_items'],
+        });
+        const customerId = session?.customer;
+        const priceId = session?.line_items?.data[0]?.price?.id;
+        const userId = checkoutSession.client_reference_id;
+        const plan = config.stripe.priceId; //TODO: Change this to the actual plan
+
+        const customer = (await stripe.customers.retrieve(customerId as string)) as Stripe.Customer;
+
+        if (!plan) {
+            break; //TODO: Handle this. Maybe throw an error?
+        }
+
+        let user;
+
+        if (!userId) {
+            // Check if the user exists in our database
+            const { data: profile} = await supabase.from('profiles').select('*').eq('email', customer.email).single();
+            if (profile) {
+                user = profile
+            } else {
+                // Create a new user using supabase auth admin
+                const tempPassword = customer.id!.split('_')[1]; // Using part of customer ID as temp password
+                const { data } = await supabase.auth.admin.createUser({
+                    email: customer.email!,
+                    password: tempPassword,
+                });
+
+                user = data?.user;
+
+                // TODO: Implement email sending with Resend
+                // Send welcome email with temporary credentials
+                /*
+                await resend.emails.send({
+                  from: 'onboarding@yourdomain.com',
+                  to: customer.email!,
+                  subject: 'Welcome to YourApp - Complete Your Account Setup',
+                  html: `
+                    <h1>Welcome to YourApp!</h1>
+                    <p>An account has been created for you following your purchase.</p>
+                    <p>Your temporary login credentials are:</p>
+                    <ul>
+                      <li>Email: ${customer.email}</li>
+                      <li>Temporary Password: ${tempPassword}</li>
+                    </ul>
+                    <p>Please login and change your password immediately.</p>
+                    <a href="${process.env.NEXT_PUBLIC_URL}/login">Login Here</a>
+                  `
+                });
+                */
+            }
+        } else {
+            const { data: profile } = await supabase.from('profiles').select('*').eq('id', userId).single();
+            user = profile;
+        }
+
+        await supabase.from('profiles').update({ customer_id: customerId, price_id: priceId, has_access: true }).eq('id', user?.id);
+        
+        // Extra: send email with user link, product page, etc...
+        // try {
+        //   await sendEmail(...);
+        // } catch (e) {
+        //   console.error("Email issue:" + e?.message);
+        // }
+
+        break;
+      }
+      case "checkout.session.expired": {
+        // User didn't complete the transaction
+        // You don't need to do anything here, by you can send an email to the user to remind him to complete the transaction, for instance
+        break;
+      }
+
+      case "customer.subscription.updated": {
+        // The customer might have changed the plan (higher or lower plan, cancel soon etc...)
+        // You don't need to do anything here, because Stripe will let us know when the subscription is canceled for good (at the end of the billing cycle) in the "customer.subscription.deleted" event
+        // You can update the user data to show a "Cancel soon" badge for instance
+        break;
+      }
+
+      case "customer.subscription.deleted": {
+        // The subscription has been canceled, you can now remove the user's access from your database
+        const stripeObject = event.data.object as Stripe.Subscription;
+        const subscription = await stripe.subscriptions.retrieve(stripeObject.id);
+
+        await supabase.from('profiles').update({ has_access: false }).eq('customer_id', subscription.customer);
+        break;
+      }
+
+      //TODO: Add other events like invoice.paid, invoice.payment_failed, etc...
+
+      default: 
+    }
+  } catch (error) {
+    console.error(`Webhook handler failed. ${error}`);
+    return new Response('Webhook handler failed', { status: 500 });
+  }
+
+  return new NextResponse(null, { status: 200 });
+}
