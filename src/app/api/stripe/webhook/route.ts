@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/supabaseServer";
+import { sendPurchaseEmail } from '@/lib/resend/sendEmail';
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -96,6 +97,22 @@ export async function POST(request: NextRequest) {
         // } catch (e) {
         //   console.error("Email issue:" + e?.message);
         // }
+
+        // Send purchase confirmation email
+        try {
+          const { error } = await sendPurchaseEmail(
+            customer.email!,
+            config.appName
+          );
+          
+          if (error) {
+            console.error("Failed to send purchase email:", error);
+          }
+        } catch (e) {
+          console.error("Email sending failed:", e);
+          // Don't throw the error - we don't want to fail the webhook
+          // just because email sending failed
+        }
 
         break;
       }
