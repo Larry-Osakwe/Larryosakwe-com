@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { PurchaseEmail, WelcomeEmail } from '@/components/Emails';
+import { PurchaseEmail, WelcomeEmail } from '@/components/emails';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -28,8 +28,29 @@ export async function sendPurchaseEmail(customerEmail: string, productName: stri
   }
 }
 
-export async function sendWelcomeEmail(email: string, tempPassword?: string) {
-  // Similar implementation for welcome emails
+export async function sendWelcomeWithPasswordEmail(email: string, tempPassword: string) {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'FlareStack <info@flarestack.io>',
+      to: email,
+      subject: 'Welcome to FlareStack - Your Account Details',
+      react: WelcomeEmail({
+        email,
+        tempPassword,
+        loginUrl: `${process.env.NEXT_PUBLIC_URL}/login`,
+      }) as React.ReactElement,
+    });
+
+    if (error) {
+      console.error("Failed to send welcome email:", error);
+      return { error };
+    }
+
+    return { data };
+  } catch (e) {
+    console.error("Welcome email sending error:", e);
+    return { error: e };
+  }
 }
 
 // Add other email sending functions as needed 

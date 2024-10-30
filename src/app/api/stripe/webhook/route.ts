@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/supabaseServer";
-import { sendPurchaseEmail } from '@/lib/resend/sendEmail';
+import { sendPurchaseEmail, sendWelcomeWithPasswordEmail } from '@/lib/resend/sendEmail';
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -63,26 +63,19 @@ export async function POST(request: NextRequest) {
 
                 user = data?.user;
 
-                // TODO: Implement email sending with Resend
                 // Send welcome email with temporary credentials
-                /*
-                await resend.emails.send({
-                  from: 'onboarding@yourdomain.com',
-                  to: customer.email!,
-                  subject: 'Welcome to YourApp - Complete Your Account Setup',
-                  html: `
-                    <h1>Welcome to YourApp!</h1>
-                    <p>An account has been created for you following your purchase.</p>
-                    <p>Your temporary login credentials are:</p>
-                    <ul>
-                      <li>Email: ${customer.email}</li>
-                      <li>Temporary Password: ${tempPassword}</li>
-                    </ul>
-                    <p>Please login and change your password immediately.</p>
-                    <a href="${process.env.NEXT_PUBLIC_URL}/login">Login Here</a>
-                  `
-                });
-                */
+                try {
+                  const { error: welcomeEmailError } = await sendWelcomeWithPasswordEmail(
+                    customer.email!,
+                    tempPassword
+                  );
+
+                  if (welcomeEmailError) {
+                    console.error("Failed to send welcome email:", welcomeEmailError);
+                  }
+                } catch (e) {
+                  console.error("Welcome email sending failed:", e);
+                }
             }
         } else {
             const { data: profile } = await supabase.from('profiles').select('*').eq('id', userId).single();
@@ -91,13 +84,6 @@ export async function POST(request: NextRequest) {
 
         await supabase.from('profiles').update({ customer_id: customerId, price_id: priceId, has_access: true }).eq('id', user?.id);
         
-        // Extra: send email with user link, product page, etc...
-        // try {
-        //   await sendEmail(...);
-        // } catch (e) {
-        //   console.error("Email issue:" + e?.message);
-        // }
-
         // Send purchase confirmation email
         try {
           const { error } = await sendPurchaseEmail(
