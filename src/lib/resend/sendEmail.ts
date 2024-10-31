@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { PurchaseEmail, WelcomeEmail } from '@/components/emails';
+import { PurchaseEmail, WelcomeEmail } from '@/components/Emails';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
