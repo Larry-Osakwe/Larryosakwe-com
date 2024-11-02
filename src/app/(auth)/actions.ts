@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/supabaseServer";
+import { sendPasswordChangedEmail } from "@/lib/resend/sendEmail";
 
 export async function loginUser({ email, password }: { email: string; password: string }) {
   const supabase = createClient();
@@ -67,9 +68,13 @@ export async function resetPassword({
     }
 
     // Exchange the code for a session
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data: sessionData } = await supabase.auth.exchangeCodeForSession(code);
+    
+    if (!sessionData.user) {
+      return { error: true, message: "Failed to verify reset code" };
+    }
 
-    // Now update the password
+    // Update the password
     const { error } = await supabase.auth.updateUser({ 
       password 
     });
@@ -77,6 +82,9 @@ export async function resetPassword({
     if (error) {
       return { error: true, message: error.message };
     }
+
+    // Send confirmation email
+    await sendPasswordChangedEmail(sessionData.user.email || '');
 
     return { success: true, message: "Password reset successful" };
   } catch (error) {

@@ -1,4 +1,5 @@
-export * from '../Emails/PurchaseEmail';
-export * from '../Emails/WelcomeEmail';
-// export * from './PasswordResetEmail';
-// ... export other email templates 
+export * from './PurchaseEmail';
+export * from './WelcomeEmail';
+export * from './PasswordChangedEmail';
+// Note: Supabase email templates handles the following:
+// Confirm Signup and Reset Password
