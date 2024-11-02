@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { resetPassword } from "../../actions";
 
@@ -28,6 +28,8 @@ export default function ResetPassword() {
     const [serverError, setServerError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false); // Add loading state
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const code = searchParams.get('code');
 
     const form = useForm({
         defaultValues: {
@@ -36,13 +38,14 @@ export default function ResetPassword() {
         },
     });
     
-    const handleSubmit = async (data: any) => { // TODO: fix this
+    const handleSubmit = async (data: { password: string}) => {
         setServerError(null);
         setIsLoading(true); // Set loading to true when submission starts
     
         try {
           const response = await resetPassword({
-            password: data.password
+            password: data.password,
+            code: code || '',
           });
     
           if (response.error) {

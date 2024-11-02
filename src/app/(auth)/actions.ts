@@ -41,7 +41,9 @@ export async function registerUser({ email, password }: { email: string; passwor
 
 export async function forgotPassword({ email }: { email: string }) {
   const supabase = createClient();
-  const { error } = await supabase.auth.resetPasswordForEmail(email);
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_URL}/forgot-password/reset-password`,
+  });
 
   if (error) {
     return { error: true, message: error.message };
@@ -50,13 +52,35 @@ export async function forgotPassword({ email }: { email: string }) {
   return { success: true, message: "If an account exists, a password reset email has been sent." };
 }
 
-export async function resetPassword({ password }: { password: string }) {
+export async function resetPassword({ 
+  password, 
+  code 
+}: { 
+  password: string;
+  code: string;
+}) {
   const supabase = createClient();
-  const { error } = await supabase.auth.updateUser({ password });
+  
+  try {
+    if (!code) {
+      return { error: true, message: "Missing reset code" };
+    }
 
-  if (error) {
-    return { error: true, message: error.message };
+    // Exchange the code for a session
+    await supabase.auth.exchangeCodeForSession(code);
+
+    // Now update the password
+    const { error } = await supabase.auth.updateUser({ 
+      password 
+    });
+
+    if (error) {
+      return { error: true, message: error.message };
+    }
+
+    return { success: true, message: "Password reset successful" };
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return { error: true, message: "Failed to reset password" };
   }
-
-  return { success: true, message: "Password reset successful" };
 }
