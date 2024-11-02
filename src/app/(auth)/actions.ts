@@ -19,7 +19,14 @@ export async function loginUser({ email, password }: { email: string; password: 
 
 export async function registerUser({ email, password }: { email: string; password: string }) {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.signUp({ email, password });
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback?next=/dashboard`,
+    }
+  });
 
   if (error) {
     return { error: true, message: error.message };
