@@ -43,7 +43,7 @@ export const Hero = () => {
       {/* Hero image section */}
       <ImageWrapper>
         <Image
-          src="/hero-image.svg"
+          src="/hero-image.png"
           alt="FlareStack Hero Image"
           width={700}
           height={500}
