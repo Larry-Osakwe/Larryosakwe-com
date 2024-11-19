@@ -6,6 +6,15 @@ html {
   scroll-behavior: smooth;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 /* HeroCards background shadow */
 .shadow {
   position: absolute;
