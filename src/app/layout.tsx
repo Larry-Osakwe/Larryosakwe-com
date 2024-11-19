@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/DarkMode/theme-provider";
-import { config } from "@/config"
+import { getSEOTags } from "@/lib/seo/seo";
 
-export const metadata: Metadata = {
-  title: config.appName,
-  description: `Welcome to ${config.appName}`,
-};
+export const metadata = getSEOTags();
 
 export default function RootLayout({
   children,
