@@ -9,7 +9,7 @@ export const PasswordChangedEmail: React.FC<Readonly<PasswordChangedEmailProps>>
     <h1>Password Changed Successfully</h1>
     <p>The password for your FlareStack account ({email}) has been changed successfully.</p>
     <p>If you did not make this change, please contact support immediately or reset your password:</p>
-    <a 
+    <a
       href={`${process.env.NEXT_PUBLIC_URL}/forgot-password`}
       style={{
         padding: '10px 20px',
