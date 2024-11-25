@@ -1,10 +1,57 @@
 'use client'
 
+import tw, { styled } from 'twin.macro';
 import { Brain, Sparkles, Palette, CircleUser, CreditCard, Mail, Database, Search, ChartBar } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { cn } from '@/lib/utils'
+
+// Styled components
+const Section = styled.section`
+  ${tw`container px-4 py-24 sm:py-32 space-y-8`}
+`;
+const HeaderContainer = styled.div`
+  ${tw`space-y-4 text-center`}
+`;
+const Title = styled.h2`
+  ${tw`text-3xl lg:text-4xl font-bold`}
+`;
+const GradientSpan = styled.span`
+  ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
+`;
+const Description = styled.p`
+  ${tw`text-xl text-muted-foreground max-w-3xl mx-auto`}
+`;
+const TabsContainer = styled.div`
+  ${tw`relative w-full flex justify-center`}
+`;
+const ScrollContainer = styled.div`
+  ${tw`overflow-auto scrollbar-hide`}
+`;
+const StyledTabsList = styled(TabsList)`
+  ${tw`inline-flex h-10 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground`}
+`;
+const StyledTabsTrigger = styled(TabsTrigger)`
+  ${tw`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[100px]`}
+`;
+const FeatureIcon = styled.span`
+  ${tw`w-4 h-4 mr-2`}
+`;
+const FeatureList = styled.ul`
+  ${tw`space-y-2`}
+`;
+const FeatureItem = styled.li`
+  ${tw`flex items-center gap-2`}
+`;
+const SparkleIcon = styled(Sparkles)`
+  ${tw`w-4 h-4 text-primary`}
+`;
+const PoweredByContainer = styled.div`
+  ${tw`flex items-center gap-2`}
+`;
+const PoweredByText = styled.span`
+  ${tw`text-sm text-muted-foreground`}
+`;
 
 const features = {
   login: {
@@ -39,7 +86,7 @@ const features = {
     description: 'Powerful email capabilities',
     details: [
       'Transactional emails',
-      'Email templates', 
+      'Email templates',
       'Custom domains',
       'DNS setup',
       'High deliverability'
@@ -109,66 +156,59 @@ const features = {
 
 export const Features = () => {
   return (
-    <section id="features" className="container px-4 py-24 sm:py-32 space-y-8">
-      <div className="space-y-4 text-center">
-        <h2 className="text-3xl lg:text-4xl font-bold">
+    <Section id="features">
+      <HeaderContainer>
+        <Title>
           Many{" "}
-          <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-            Great Features
-          </span>
-        </h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Everything you need to build modern applications. 
+          <GradientSpan>Great Features</GradientSpan>
+        </Title>
+        <Description>
+          Everything you need to build modern applications.
           Start with our production-ready template and focus on what matters - your product.
-        </p>
-      </div>
+        </Description>
+      </HeaderContainer>
 
       <Tabs defaultValue="login" className="w-full">
-        <div className="relative w-full flex justify-center">
-          <div className="overflow-auto scrollbar-hide">
-            <TabsList className="inline-flex h-10 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground">
+        <TabsContainer>
+          <ScrollContainer>
+            <StyledTabsList>
               {Object.entries(features).map(([key, feature]) => (
-                <TabsTrigger 
-                  key={key} 
-                  value={key} 
-                  className={cn(
-                    "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
-                    "min-w-[100px]"
-                  )}
-                >
-                  <feature.icon className="w-4 h-4 mr-2" />
+                <StyledTabsTrigger key={key} value={key}>
+                  <FeatureIcon>
+                    <feature.icon />
+                  </FeatureIcon>
                   <span>{feature.title}</span>
-                </TabsTrigger>
+                </StyledTabsTrigger>
               ))}
-            </TabsList>
-          </div>
-        </div>
+            </StyledTabsList>
+          </ScrollContainer>
+        </TabsContainer>
 
         {Object.entries(features).map(([key, feature]) => (
           <TabsContent key={key} value={key}>
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">{feature.title}</CardTitle>
+                <CardTitle>{feature.title}</CardTitle>
                 <CardDescription>{feature.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <ul className="space-y-2">
+                <FeatureList>
                   {feature.details.map((detail, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-primary" />
+                    <FeatureItem key={index}>
+                      <SparkleIcon />
                       <span>{detail}</span>
-                    </li>
+                    </FeatureItem>
                   ))}
-                </ul>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Powered by</span>
+                </FeatureList>
+                <PoweredByContainer>
+                  <PoweredByText>Powered by</PoweredByText>
                   <Badge variant="secondary">{feature.poweredBy}</Badge>
-                </div>
+                </PoweredByContainer>
               </CardContent>
             </Card>
           </TabsContent>
         ))}
       </Tabs>
-    </section>
+    </Section>
   );
 }
