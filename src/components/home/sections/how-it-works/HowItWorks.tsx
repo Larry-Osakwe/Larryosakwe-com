@@ -1,7 +1,28 @@
-
+import tw, { styled } from 'twin.macro';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Medal, Map, Plane, Gift } from "lucide-react";
 
+const Section = styled.section`
+  ${tw`container text-center py-24 sm:py-32`}
+`;
+const Title = styled.h2`
+  ${tw`text-3xl md:text-4xl font-bold`}
+`;
+const GradientSpan = styled.span`
+  ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
+`;
+const Description = styled.p`
+  ${tw`md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground`}
+`;
+const FeatureGrid = styled.div`
+  ${tw`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8`}
+`;
+const FeatureCard = styled(Card)`
+  ${tw`bg-muted/50`}
+`;
+const IconTitle = styled(CardTitle)`
+  ${tw`grid gap-4 place-items-center`}
+`;
 interface FeatureProps {
   icon?: JSX.Element;
   title: string;
@@ -37,38 +58,30 @@ const features: FeatureProps[] = [
 
 export const HowItWorks = () => {
   return (
-    <section
-      id="howItWorks"
-      className="container text-center py-24 sm:py-32"
-    >
-      <h2 className="text-3xl md:text-4xl font-bold ">
+    <Section id="howItWorks">
+      <Title>
         How It{" "}
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Works{" "}
-        </span>
+        <GradientSpan>Works </GradientSpan>
         Step-by-Step Guide
-      </h2>
-      <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
+      </Title>
+      <Description>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
         dolor pariatur sit!
-      </p>
+      </Description>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <FeatureGrid>
         {features.map(({ icon, title, description }: FeatureProps) => (
-          <Card
-            key={title}
-            className="bg-muted/50"
-          >
+          <FeatureCard key={title}>
             <CardHeader>
-              <CardTitle className="grid gap-4 place-items-center">
+              <IconTitle>
                 {icon}
                 {title}
-              </CardTitle>
+              </IconTitle>
             </CardHeader>
             <CardContent>{description}</CardContent>
-          </Card>
+          </FeatureCard>
         ))}
-      </div>
-    </section>
+      </FeatureGrid>
+    </Section>
   );
 };

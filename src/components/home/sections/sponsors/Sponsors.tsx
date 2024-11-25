@@ -1,4 +1,21 @@
+import tw, { styled } from 'twin.macro';
 import { Radar } from "lucide-react";
+
+const Section = styled.section`
+  ${tw`container pt-24 sm:py-32`}
+`;
+const Title = styled.h2`
+  ${tw`text-center text-md lg:text-xl font-bold mb-8 text-primary`}
+`;
+const SponsorGrid = styled.div`
+  ${tw`flex flex-wrap justify-center items-center gap-4 md:gap-8`}
+`;
+const SponsorItem = styled.div`
+  ${tw`flex items-center gap-1 text-muted-foreground/60`}
+`;
+const SponsorName = styled.h3`
+  ${tw`text-xl font-bold`}
+`;
 
 interface SponsorProps {
   icon: JSX.Element;
@@ -34,25 +51,17 @@ const sponsors: SponsorProps[] = [
 
 export const Sponsors = () => {
   return (
-    <section
-      id="sponsors"
-      className="container pt-24 sm:py-32"
-    >
-      <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
-        Investors and founders
-      </h2>
+    <Section id="sponsors">
+      <Title>Investors and founders</Title>
 
-      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+      <SponsorGrid>
         {sponsors.map(({ icon, name }: SponsorProps) => (
-          <div
-            key={name}
-            className="flex items-center gap-1 text-muted-foreground/60"
-          >
+          <SponsorItem key={name}>
             <span>{icon}</span>
-            <h3 className="text-xl  font-bold">{name}</h3>
-          </div>
+            <SponsorName>{name}</SponsorName>
+          </SponsorItem>
         ))}
-      </div>
-    </section>
+      </SponsorGrid>
+    </Section>
   );
 };

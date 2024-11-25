@@ -1,6 +1,32 @@
+import tw, { styled } from 'twin.macro';
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Wallet, BarChart } from "lucide-react";
 import Image from "next/image";
+
+const Section = styled.section`
+  ${tw`container py-24 sm:py-32`}
+`;
+const Grid = styled.div`
+  ${tw`grid lg:grid-cols-[1fr,1fr] gap-8 place-items-center`}
+`;
+const ContentColumn = styled.div`
+  ${tw`flex flex-col gap-8`}
+`;
+const Title = styled.h2`
+  ${tw`text-3xl md:text-4xl font-bold`}
+`;
+const GradientSpan = styled.span`
+  ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
+`;
+const Description = styled.p`
+  ${tw`text-muted-foreground text-xl mt-4 mb-8`}
+`;
+const IconWrapper = styled.div`
+  ${tw`mt-1 bg-primary/20 p-1 rounded-2xl`}
+`;
+const ServiceImage = styled(Image)`
+  ${tw`object-contain rounded-lg`}
+`;
 
 interface ServiceProps {
   title: string;
@@ -31,28 +57,24 @@ const serviceList: ServiceProps[] = [
 
 export const Services = () => {
   return (
-    <section className="container py-24 sm:py-32">
-      <div className="grid lg:grid-cols-[1fr,1fr] gap-8 place-items-center">
+    <Section>
+      <Grid>
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-              Client-Centric{" "}
-            </span>
+          <Title>
+            <GradientSpan>Client-Centric </GradientSpan>
             Services
-          </h2>
+          </Title>
 
-          <p className="text-muted-foreground text-xl mt-4 mb-8 ">
+          <Description>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
             dolor.
-          </p>
+          </Description>
 
-          <div className="flex flex-col gap-8">
+          <ContentColumn>
             {serviceList.map(({ icon, title, description }: ServiceProps) => (
               <Card key={title}>
                 <CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
-                  <div className="mt-1 bg-primary/20 p-1 rounded-2xl">
-                    {icon}
-                  </div>
+                  <IconWrapper>{icon}</IconWrapper>
                   <div>
                     <CardTitle>{title}</CardTitle>
                     <CardDescription className="text-md mt-2">
@@ -62,16 +84,15 @@ export const Services = () => {
                 </CardHeader>
               </Card>
             ))}
-          </div>
+          </ContentColumn>
         </div>
-        <Image
+        <ServiceImage
           src="https://cdn.pixabay.com/photo/2022/08/25/23/06/woman-7411414_1280.png"
           alt="background"
-          className="object-contain rounded-lg"
           width={500}
           height={400}
         />
-      </div>
-    </section>
+      </Grid>
+    </Section>
   );
 };

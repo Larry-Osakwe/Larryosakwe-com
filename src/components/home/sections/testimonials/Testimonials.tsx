@@ -1,3 +1,4 @@
+import tw, { styled } from 'twin.macro';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -6,6 +7,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+const Section = styled.section`
+  ${tw`container py-24 sm:py-32`}
+`;
+const Title = styled.h2`
+  ${tw`text-3xl md:text-4xl font-bold`}
+`;
+const GradientSpan = styled.span`
+  ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
+`;
+const Description = styled.p`
+  ${tw`text-xl text-muted-foreground pt-4 pb-8`}
+`;
+const TestimonialGrid = styled.div`
+  ${tw`grid md:grid-cols-2 lg:grid-cols-4 sm:block columns-2 lg:columns-3 lg:gap-6 mx-auto space-y-4 lg:space-y-6`}
+`;
+const TestimonialCard = styled(Card)`
+  ${tw`max-w-md md:break-inside-avoid overflow-hidden`}
+`;
+const CardHeaderStyled = styled(CardHeader)`
+  ${tw`flex flex-row items-center gap-4 pb-2`}
+`;
+const UserInfo = styled.div`
+  ${tw`flex flex-col`}
+`;
 
 interface TestimonialProps {
   image: string;
@@ -61,51 +87,37 @@ const testimonials: TestimonialProps[] = [
 
 export const Testimonials = () => {
   return (
-    <section
-      id="testimonials"
-      className="container py-24 sm:py-32"
-    >
-      <h2 className="text-3xl md:text-4xl font-bold">
+    <Section id="testimonials">
+      <Title>
         Discover Why
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          {" "}
-          People Love{" "}
-        </span>
+        <GradientSpan> People Love </GradientSpan>
         This Landing Page
-      </h2>
+      </Title>
 
-      <p className="text-xl text-muted-foreground pt-4 pb-8">
+      <Description>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non unde error
         facere hic reiciendis illo
-      </p>
+      </Description>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 sm:block columns-2  lg:columns-3 lg:gap-6 mx-auto space-y-4 lg:space-y-6">
-        {testimonials.map(
-          ({ image, name, userName, comment }: TestimonialProps) => (
-            <Card
-              key={userName}
-              className="max-w-md md:break-inside-avoid overflow-hidden"
-            >
-              <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                <Avatar>
-                  <AvatarImage
-                    alt=""
-                    src={image}
-                  />
-                  <AvatarFallback>OM</AvatarFallback>
-                </Avatar>
+      <TestimonialGrid>
+        {testimonials.map(({ image, name, userName, comment }: TestimonialProps) => (
+          <TestimonialCard key={userName}>
+            <CardHeaderStyled>
+              <Avatar>
+                <AvatarImage alt="" src={image} />
+                <AvatarFallback>OM</AvatarFallback>
+              </Avatar>
 
-                <div className="flex flex-col">
-                  <CardTitle className="text-lg">{name}</CardTitle>
-                  <CardDescription>{userName}</CardDescription>
-                </div>
-              </CardHeader>
+              <UserInfo>
+                <CardTitle className="text-lg">{name}</CardTitle>
+                <CardDescription>{userName}</CardDescription>
+              </UserInfo>
+            </CardHeaderStyled>
 
-              <CardContent>{comment}</CardContent>
-            </Card>
-          )
-        )}
-      </div>
-    </section>
+            <CardContent>{comment}</CardContent>
+          </TestimonialCard>
+        ))}
+      </TestimonialGrid>
+    </Section>
   );
 };
