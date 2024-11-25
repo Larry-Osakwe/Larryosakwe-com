@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import { UserAuthForm } from "@/components/auth/forms";
 import { AuthLayout } from "@/components/auth/common";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/supabaseServer";
 import { getSEOTags } from "@/lib/seo/seo";
+import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = getSEOTags({
   title: "Login",
@@ -16,10 +16,9 @@ export const metadata: Metadata = getSEOTags({
 });
 
 export default async function LoginPage() {
-  const supabase = createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
-  if (user && !error) {
+  if (user) {
     redirect("/dashboard");
   }
 
