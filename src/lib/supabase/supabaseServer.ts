@@ -26,31 +26,3 @@ export function createClient(useServiceRole = false) {
     }
   );
 }
-
-export async function getUser() {
-  const supabase = createClient();
-  const { data: { user }, error } = await supabase.auth.getUser();
-
-  return user;
-}
-
-export async function isLoggedIn() {
-  const user = await getUser();
-
-  if (!user) throw new Error("Unauthorized");
-}
-
-export async function hasAccess() {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  if (!user) return false;
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('has_access')
-    .eq('id', user.id)
-    .single();
-
-  return !!profile?.has_access;
-}

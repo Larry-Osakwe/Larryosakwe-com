@@ -1,6 +1,6 @@
 import { stripe } from "./stripeClient";
 import { createClient } from "@/lib/supabase/supabaseServer";
-import { sendPurchaseEmail } from '@/lib/resend/sendEmail';
+import { sendPurchaseEmail } from '@/lib/resend/emails';
 import { config } from "@/config";
 import Stripe from "stripe";
 

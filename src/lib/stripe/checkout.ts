@@ -1,6 +1,6 @@
 import { stripe } from "./stripeClient";
 import { config } from "@/config";
-import { CheckoutMode } from "@/types/stripe";
+import { CheckoutMode } from "@/types/config";
 import Stripe from "stripe";
 
 interface CreateCheckoutParams {
@@ -11,8 +11,8 @@ interface CreateCheckoutParams {
   coupon?: string;
 }
 
-export async function createCheckout({ 
-  priceId, 
+export async function createCheckout({
+  priceId,
   mode,
   coupon,
   successUrl = `${process.env.NEXT_PUBLIC_URL}/purchase/confirmation?session_id={CHECKOUT_SESSION_ID}`,

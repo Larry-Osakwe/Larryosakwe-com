@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { config } from "@/config";
 
 export const getSEOTags = ({
-    description, 
+    description,
     keywords,
     openGraph,
     canonicalUrlRelative,
@@ -25,8 +25,8 @@ export const getSEOTags = ({
         publisher: config.appName,
         metadataBase: new URL(
             process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/"
-              : `https://${config.domainName}/`
+                ? "http://localhost:3000/"
+                : `https://${config.domainName}/`
         ),
         openGraph: {
             title: openGraph?.title || config.appName,
@@ -56,7 +56,7 @@ export const getSEOTags = ({
                 follow: true,
                 "max-image-preview": "large",
                 "max-snippet": -1,
-                "max-video-preview": -1,    
+                "max-video-preview": -1,
             }
         },
         twitter: {
@@ -78,7 +78,7 @@ export const getSEOTags = ({
         ...(canonicalUrlRelative && {
             alternates: { canonical: canonicalUrlRelative },
         }),
-  
+
         // If you want to add extra tags, you can pass them here
         ...extraTags,
     };
