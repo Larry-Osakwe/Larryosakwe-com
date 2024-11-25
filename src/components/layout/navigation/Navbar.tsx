@@ -12,7 +12,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
 import { buttonVariants } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/theme/ModeToggle";
@@ -21,23 +20,48 @@ import { config } from "@/config"
 import { ButtonCheckout } from "@/components/checkout/ButtonCheckout";
 import ButtonSignIn from "@/components/auth/common/ButtonSignIn";
 
-// Styled components using twin.macro
-// You can customize these styles by modifying the tw`` template literals with tailwind classes
-const HeaderWrapper = tw.header`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`;
-const StyledNavigationMenu = styled(NavigationMenu)`${tw`mx-auto`}`;
-const StyledNavigationMenuList = styled(NavigationMenuList)`${tw`container h-14 px-4 w-screen flex justify-between`}`;
-const LogoMenuItem = styled(NavigationMenuItem)`${tw`font-bold flex`}`;
-const LogoLink = tw.a`ml-2 font-bold text-xl flex`;
-const MobileActions = tw.span`flex md:hidden`;
-const DesktopNav = tw.nav`hidden md:flex gap-2`;
-const DesktopActions = tw.div`hidden md:flex gap-2`;
-const MobileNavContent = tw.nav`flex flex-col justify-center items-center gap-2 mt-4`;
-const StyledSheetTrigger = styled(SheetTrigger)`${tw`px-2`}`;
-const MenuIcon = styled(Menu)`${tw`flex md:hidden h-5 w-5`}`;
-const SheetTitleWrapper = tw.div`font-bold text-xl`;
-const NavLink = styled.a`${tw`text-[17px]`}`;
+// Styled components
+const HeaderWrapper = styled.header`
+  ${tw`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`}
+`;
+const StyledNavigationMenu = styled(NavigationMenu)`
+  ${tw`mx-auto`}
+`;
+const StyledNavigationMenuList = styled(NavigationMenuList)`
+  ${tw`container h-14 px-4 w-screen flex justify-between`}
+`;
+const LogoMenuItem = styled(NavigationMenuItem)`
+  ${tw`font-bold flex`}
+`;
+const LogoLink = styled.a`
+  ${tw`ml-2 font-bold text-xl flex`}
+`;
+const MobileActions = styled.span`
+  ${tw`flex md:hidden`}
+`;
+const DesktopNav = styled.nav`
+  ${tw`hidden md:flex gap-2`}
+`;
+const DesktopActions = styled.div`
+  ${tw`hidden md:flex gap-2`}
+`;
+const MobileNavContent = styled.nav`
+  ${tw`flex flex-col justify-center items-center gap-2 mt-4`}
+`;
+const StyledSheetTrigger = styled(SheetTrigger)`
+  ${tw`px-2`}
+`;
+const MenuIcon = styled(Menu)`
+  ${tw`flex md:hidden h-5 w-5`}
+`;
+const SheetTitleWrapper = styled.div`
+  ${tw`font-bold text-xl`}
+`;
+const NavLink = styled.a`
+  ${tw`text-[17px]`}
+`;
 
-// TODO: Customize your navigation items here
+// Navigation items configuration
 const navItems = [
   { href: "#features", label: "Features" },
   { href: "#pricing", label: "Pricing" },
@@ -55,7 +79,6 @@ export const Navbar = () => {
           {/* Logo and App Name */}
           <LogoMenuItem>
             <LogoLink href="/" rel="noreferrer noopener">
-              {/* TODO: Customize your logo in the Icons.tsx file */}
               <LogoIcon />
               <span>{config.appName.toUpperCase()}</span>
             </LogoLink>
@@ -69,7 +92,7 @@ export const Navbar = () => {
                 <MenuIcon onClick={() => setIsOpen(true)} aria-label="Menu Icon" />
               </StyledSheetTrigger>
 
-              <SheetContent side={"left"}>
+              <SheetContent side="left">
                 <SheetHeader>
                   <LogoIcon />
                   <SheetTitle>
@@ -77,7 +100,6 @@ export const Navbar = () => {
                   </SheetTitle>
                 </SheetHeader>
                 <MobileNavContent>
-                  {/* TODO: Customize mobile navigation items here */}
                   {navItems.map((route, i) => (
                     <NavLink
                       key={i}
@@ -88,7 +110,10 @@ export const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
-                  <ButtonCheckout priceId={config.stripe.plans[1].priceId} mode={config.stripe.plans[1].mode} />
+                  <ButtonCheckout
+                    priceId={config.stripe.plans[1].priceId}
+                    mode={config.stripe.plans[1].mode}
+                  />
                 </MobileNavContent>
               </SheetContent>
             </Sheet>
@@ -96,7 +121,6 @@ export const Navbar = () => {
 
           {/* Desktop Navigation */}
           <DesktopNav>
-            {/* TODO: Customize desktop navigation items here */}
             {navItems.map((route, i) => (
               <NavLink
                 key={i}
@@ -108,7 +132,7 @@ export const Navbar = () => {
             ))}
           </DesktopNav>
 
-          {/* Desktop Actions (e.g., Checkout Button, Theme Toggle) */}
+          {/* Desktop Actions */}
           <DesktopActions>
             <ButtonSignIn />
             <ModeToggle />
