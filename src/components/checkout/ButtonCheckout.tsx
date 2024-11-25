@@ -9,25 +9,21 @@ import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CheckoutMode } from '@/types/config/stripe';
 
-// Note: This component uses twin.macro for styling. 
-// To customize styles, modify the tw`` template literals in the styled components section.
-// For more information on twin.macro, visit: https://github.com/ben-rogerson/twin.macro
-
-// Styled components using twin.macro
-// You can customize these styles by modifying the tw`` template literals
-const StyledButton = styled(Button)`
+// Styled components
+const CheckoutButton = styled(Button)`
   ${tw`flex items-center justify-center`}
-  // Add any additional custom styles here
+`;
+
+const LoaderIcon = styled(Loader2)`
+  ${tw`mr-2 h-4 w-4 animate-spin`}
 `;
 
 const LogoWrapper = styled.span`
-  ${tw`h-6 w-6`}
-  // Customize the logo wrapper styles here
+  ${tw`mr-2 h-6 w-6`}
 `;
 
-// Configure the checkout button
-// TODO: Customize the checkout button configuration as needed
-const checkoutButtonConfig = {
+// Default configuration
+const defaultConfig = {
   label: `Get ${config.appName}`,
   showLogo: true,
 };
@@ -37,12 +33,12 @@ interface ButtonCheckoutProps {
   showLogo?: boolean;
   className?: string;
   priceId: string;
-  mode: CheckoutMode; // Remove optional since it comes from config
+  mode: CheckoutMode;
 }
 
 export const ButtonCheckout: React.FC<ButtonCheckoutProps> = ({
-  label = checkoutButtonConfig.label,
-  showLogo = checkoutButtonConfig.showLogo,
+  label = defaultConfig.label,
+  showLogo = defaultConfig.showLogo,
   className,
   priceId,
   mode,
@@ -80,20 +76,20 @@ export const ButtonCheckout: React.FC<ButtonCheckoutProps> = ({
   };
 
   return (
-    <StyledButton
+    <CheckoutButton
       onClick={handleCheckout}
       className={className}
       variant="default"
       disabled={isLoading}
     >
       {isLoading ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        <LoaderIcon />
       ) : showLogo && (
         <LogoWrapper>
           <LogoIcon />
         </LogoWrapper>
       )}
       {isLoading ? "Loading..." : label}
-    </StyledButton>
+    </CheckoutButton>
   );
 };

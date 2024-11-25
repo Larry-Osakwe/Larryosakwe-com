@@ -11,11 +11,9 @@ import tw, { styled } from 'twin.macro';
 const LoaderIcon = styled(Loader2)`
   ${tw`mr-2 size-4 animate-spin`}
 `;
-
 const ProviderIcon = styled(Image)`
   ${tw`mr-2`}
 `;
-
 const SignInButton = styled(Button)`
   ${tw`w-full`}
 `;
