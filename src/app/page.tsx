@@ -1,4 +1,4 @@
-import { HomeContent } from "@/components/HomeContent/HomeContent";
+import { HomeContent } from "@/components/home/HomeContent";
 import { getSEOTags } from "@/lib/seo/seo";
 
 export const metadata = getSEOTags({
