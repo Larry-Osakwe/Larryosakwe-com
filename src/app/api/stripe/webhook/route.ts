@@ -13,18 +13,18 @@ export async function POST(request: NextRequest) {
     }
 
     const event = stripe.webhooks.constructEvent(
-      body, 
-      signature, 
+      body,
+      signature,
       process.env.STRIPE_SIGNING_SECRET!
     );
 
     await handleWebhookEvent(event);
-    
+
     return new NextResponse(null, { status: 200 });
   } catch (error) {
     console.error('Webhook error:', error);
     return new NextResponse(
-      `Webhook error: ${error instanceof Error ? error.message : 'Unknown error'}`, 
+      `Webhook error: ${error instanceof Error ? error.message : 'Unknown error'}`,
       { status: 400 }
     );
   }
