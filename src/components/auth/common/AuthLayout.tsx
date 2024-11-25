@@ -79,7 +79,7 @@ export function AuthLayout({ children, showImage = true, heading, subheading }: 
           <ImageOverlay />
           <ImageContainer>
             <BackgroundImage
-              src="/auth-background.jpg"
+              src="https://images.unsplash.com/photo-1508028471618-6f8e1b73eb56?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Authentication background"
               width={1280}
               height={843}
