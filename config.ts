@@ -85,9 +85,28 @@ export const config: AppConfig = {
     ],
   },
 
-  // Add any additional app-wide configurations below
-  // Example:
-  // analytics: {
-  //   googleAnalyticsId: "YOUR_GA_ID"
-  // }
+  // Google Calendar Scheduler. See https://flarestack.io/docs/scheduler for more information
+  scheduler: {
+    enabled: true,
+    defaultConfig: {
+      url: '', // Replace with your Google Calendar URL
+      color: '#f97316', // Replace with your brand color
+      label: 'Book an appointment',
+      inline: false, // false for button, true for iframe
+      width: '100%',
+      height: '600px'
+    }
+  },
+
+  // Resend email configuration. See https://flarestack.io/docs/email for more information
+  resend: {
+    from: {
+      name: "FlareStack", // Replace with your brand name
+      email: "info@flarestack.io" // Replace with your email
+    },
+    support: {
+      email: "larry@laflarela.com", // Replace with your support email
+    },
+    replyTo: "larry@laflarela.com" // Replace with your reply-to email
+  }
 };
