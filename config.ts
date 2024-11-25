@@ -107,12 +107,12 @@ export const config: AppConfig = {
    */
   resend: {
     from: {
-      name: "FlareStack",                    // Display name for outgoing emails
-      email: "info@flarestack.io"            // Email address for sending
+      name: "Awesome App",                    // Display name for outgoing emails
+      email: "info@awesomeapp.com"            // Email address for sending
     },
     support: {
-      email: "larry@laflarela.com",          // Address for receiving support inquiries
+      email: "gethelp@awesomeapp.com",          // Address for receiving support inquiries
     },
-    replyTo: "larry@laflarela.com"           // Default reply-to address
+    replyTo: "gethelp@awesomeapp.com"           // Default reply-to address
   }
 };

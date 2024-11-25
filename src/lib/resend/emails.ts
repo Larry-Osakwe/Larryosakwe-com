@@ -3,6 +3,27 @@ import { PurchaseEmail, PasswordChangedEmail } from '@/components/emails';
 import type { EmailResponse } from './types';
 import { config } from '@/config';
 
+/**
+ * Sends a purchase confirmation email to the customer
+ * 
+ * This email is triggered after a successful purchase/subscription
+ * and includes:
+ * - Purchase confirmation details
+ * - Link to dashboard
+ * - Product information
+ * 
+ * @param customerEmail - The recipient's email address
+ * @param productName - Name of the purchased product/plan
+ * @returns EmailResponse with success data or error
+ * 
+ * @example
+ * ```ts
+ * await sendPurchaseEmail(
+ *   "customer@example.com",
+ *   "Premium Plan"
+ * );
+ * ```
+ */
 export async function sendPurchaseEmail(customerEmail: string, productName: string): Promise<EmailResponse> {
   const resend = createResendClient();
   try {
@@ -30,6 +51,20 @@ export async function sendPurchaseEmail(customerEmail: string, productName: stri
   }
 }
 
+/**
+ * Sends a notification email when a user's password is changed
+ * 
+ * This email is sent as a security measure to notify users
+ * of password changes on their account
+ * 
+ * @param email - The user's email address
+ * @returns EmailResponse with success data or error
+ * 
+ * @example
+ * ```ts
+ * await sendPasswordChangedEmail("user@example.com");
+ * ```
+ */
 export async function sendPasswordChangedEmail(email: string): Promise<EmailResponse> {
   const resend = createResendClient();
   try {

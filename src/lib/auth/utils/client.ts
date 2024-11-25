@@ -1,6 +1,24 @@
 import { createClient } from "@/lib/supabase/supabaseClient";
 import type { AuthUser } from "../types";
 
+/**
+ * Retrieves the currently authenticated user's data from the client side
+ * 
+ * This function:
+ * 1. Gets the basic user data from Supabase Auth
+ * 2. Fetches additional profile data from the profiles table
+ * 3. Combines them into a unified user object
+ * 
+ * @returns AuthUser object if authenticated, null if not
+ * 
+ * @example
+ * ```ts
+ * const user = await getCurrentUser();
+ * if (user) {
+ *   console.log('Logged in as:', user.email);
+ * }
+ * ```
+ */
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const supabase = createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
