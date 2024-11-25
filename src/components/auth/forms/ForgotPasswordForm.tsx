@@ -10,6 +10,18 @@ import { Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth/hooks";
 import { forgotPassword } from "@/lib/auth";
 import { emailSchema, type LoginSchema } from "@/lib/auth/schemas";
+import tw, { styled } from 'twin.macro';
+
+// Styled components
+const FormContainer = styled.form`
+  ${tw`flex flex-col gap-2`}
+`;
+const ErrorMessage = styled.p`
+  ${tw`text-red-500 text-sm mt-2`}
+`;
+const LoaderIcon = styled(Loader2)`
+  ${tw`mr-2 h-4 w-4 animate-spin`}
+`;
 
 export function ForgotPasswordForm() {
   const { handleAuthAction, isLoading, serverError } = useAuth({
@@ -31,7 +43,7 @@ export function ForgotPasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <FormContainer onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="email"
@@ -54,19 +66,19 @@ export function ForgotPasswordForm() {
           )}
         />
         {serverError && (
-          <p className="text-red-500 text-sm mt-2">{serverError}</p>
+          <ErrorMessage>{serverError}</ErrorMessage>
         )}
         <Button type="submit" disabled={isLoading}>
           {isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <LoaderIcon />
               Please wait
             </>
           ) : (
             "Reset Password"
           )}
         </Button>
-      </form>
+      </FormContainer>
     </Form>
   );
 }

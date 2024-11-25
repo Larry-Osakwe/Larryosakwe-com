@@ -4,12 +4,11 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/shared/icons/Icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { GoogleSignIn } from "@/components/auth/providers.tsx/GoogleSignIn"
+import { GoogleSignIn } from "@/components/auth/providers/GoogleSignIn"
 import { useAuth } from "@/lib/auth/hooks"
 import { 
   loginSchema, 
@@ -17,13 +16,54 @@ import {
   type LoginSchema, 
   type RegisterSchema 
 } from "@/lib/auth/schemas"
-import { signIn, signUp } from "@/lib/auth" 
+import { signIn, signUp } from "@/lib/auth"
+import tw, { styled } from 'twin.macro'
+
+// Styled components
+const Container = styled.div`
+  ${tw`grid gap-6`}
+`;
+const FormWrapper = styled.form`
+  ${tw`space-y-4`}
+`;
+const ErrorMessage = styled.p`
+  ${tw`text-sm text-red-500`}
+`;
+const SpinnerIcon = styled(Icons.spinner)`
+  ${tw`mr-2 h-4 w-4 animate-spin`}
+`;
+const FullWidthButton = styled(Button)`
+  ${tw`w-full`}
+`;
+const ResetPasswordText = styled.p`
+  ${tw`px-8 text-center text-sm text-muted-foreground`}
+`;
+const StyledLink = styled(Link)`
+  ${tw`underline underline-offset-4 hover:text-primary`}
+`;
+const Divider = styled.div`
+  ${tw`relative`}
+  
+  &:before {
+    ${tw`absolute inset-0 flex items-center`}
+    content: "";
+  }
+`;
+const DividerLine = styled.span`
+  ${tw`w-full border-t`}
+`;
+const DividerText = styled.div`
+  ${tw`relative flex justify-center text-xs uppercase`}
+`;
+const DividerBackground = styled.span`
+  ${tw`bg-background px-2 text-muted-foreground`}
+`;
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
   type: 'login' | 'signup'
 }
 
-export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
+export function UserAuthForm({ type, ...props }: UserAuthFormProps) {
   const { handleAuthAction, isLoading, serverError } = useAuth({
     redirectTo: type === 'login' ? '/dashboard' : '/signup/confirmation'
   });
@@ -46,9 +86,9 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <Container {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormWrapper onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="email"
@@ -114,50 +154,43 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             />
           )}
           {serverError && (
-            <p className="text-sm text-red-500">{serverError}</p>
+            <ErrorMessage>{serverError}</ErrorMessage>
           )}
-          <Button type="submit" disabled={isLoading} className="w-full">
-            {isLoading ? (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
+          <FullWidthButton type="submit" disabled={isLoading}>
+            {isLoading && <SpinnerIcon />}
             {type === 'login' ? 'Sign In' : 'Sign Up'}
-          </Button>
-        </form>
+          </FullWidthButton>
+        </FormWrapper>
       </Form>
 
       {type === 'login' && (
-        <p className="px-8 text-center text-sm text-muted-foreground">
+        <ResetPasswordText>
           Forgot password?{" "}
-          <Link
-            href="/forgot-password"
-            className="underline underline-offset-4 hover:text-primary"
-          >
+          <StyledLink href="/forgot-password">
             Reset my password
-          </Link>
-        </p>
+          </StyledLink>
+        </ResetPasswordText>
       )}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+      
+      <Divider>
+        <DividerLine />
+        <DividerText>
+          <DividerBackground>
             Or continue with
-          </span>
-        </div>
-      </div>
+          </DividerBackground>
+        </DividerText>
+      </Divider>
+
       <GoogleSignIn />
-      <p className="px-8 text-center text-sm text-muted-foreground">
+
+      <ResetPasswordText>
         {type === 'login' 
           ? "Don't have an account? "
           : "Already have an account? "}
-        <Link
-          href={type === 'login' ? "/signup" : "/login"}
-          className="underline underline-offset-4 hover:text-primary"
-        >
+        <StyledLink href={type === 'login' ? "/signup" : "/login"}>
           {type === 'login' ? 'Sign Up' : 'Login'}
-        </Link>
-      </p>
-    </div>
+        </StyledLink>
+      </ResetPasswordText>
+    </Container>
   )
 }

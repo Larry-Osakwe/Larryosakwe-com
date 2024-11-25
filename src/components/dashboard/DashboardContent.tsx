@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GithubSignIn } from "@/components/auth/providers.tsx/GithubSignIn";
+import { GithubSignIn } from "@/components/auth/providers/GithubSignIn";
 import GitHubInviteHandler from "@/hooks/GitHubInviteHandler";
 import type { AuthUser } from '@/lib/auth/types';
 

@@ -10,6 +10,18 @@ import { useAuth } from "@/lib/auth/hooks";
 import { resetPassword } from "@/lib/auth";
 import { z } from "zod";
 import { passwordSchema } from "@/lib/auth/schemas";
+import tw, { styled } from 'twin.macro';
+
+// Styled components
+const FormContainer = styled.form`
+  ${tw`flex flex-col gap-2`}
+`;
+const ErrorMessage = styled.p`
+  ${tw`text-red-500 text-sm mt-2`}
+`;
+const LoaderIcon = styled(Loader2)`
+  ${tw`mr-2 h-4 w-4 animate-spin`}
+`;
 
 const resetPasswordSchema = z.object({
   password: passwordSchema,
@@ -42,7 +54,7 @@ export function ResetPasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <FormContainer onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="password"
@@ -84,19 +96,19 @@ export function ResetPasswordForm() {
           )}
         />
         {serverError && (
-          <p className="text-red-500 text-sm mt-2">{serverError}</p>
+          <ErrorMessage>{serverError}</ErrorMessage>
         )}
         <Button type="submit" disabled={isLoading}>
           {isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <LoaderIcon />
               Please wait
             </>
           ) : (
             "Reset Password"
           )}
         </Button>
-      </form>
+      </FormContainer>
     </Form>
   );
 }

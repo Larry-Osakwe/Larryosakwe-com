@@ -3,11 +3,20 @@
 import { Suspense } from "react";
 import { AuthCard } from "@/components/auth/common/AuthCard";
 import { ForgotPasswordForm } from "@/components/auth/forms/ForgotPasswordForm";
+import tw, { styled } from 'twin.macro';
+
+const PageContainer = styled.main`
+  ${tw`flex justify-center items-center min-h-screen`}
+`;
+
+const LoadingFallback = styled.div`
+  ${tw`flex justify-center items-center min-h-screen text-muted-foreground`}
+`;
 
 export function ForgotPasswordPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <main className="flex justify-center items-center min-h-screen">
+    <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
+      <PageContainer>
         <AuthCard 
           title="Password Reset"
           description="Enter your email address to reset your password"
@@ -18,7 +27,7 @@ export function ForgotPasswordPage() {
         >
           <ForgotPasswordForm />
         </AuthCard>
-      </main>
+      </PageContainer>
     </Suspense>
   );
 }

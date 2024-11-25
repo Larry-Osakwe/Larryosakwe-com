@@ -2,20 +2,29 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-
 import { createClient } from "@/lib/supabase/supabaseClient";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import tw, { styled } from 'twin.macro';
+
+const LoaderIcon = styled(Loader2)`
+  ${tw`mr-2 size-4 animate-spin`}
+`;
+
+const ProviderIcon = styled(Image)`
+  ${tw`mr-2`}
+`;
+
+const SignInButton = styled(Button)`
+  ${tw`w-full`}
+`;
 
 export function GoogleSignIn() {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
-
   const searchParams = useSearchParams();
-
   const next = searchParams.get("next");
 
   async function signInWithGoogle() {
@@ -44,24 +53,23 @@ export function GoogleSignIn() {
   }
 
   return (
-    <Button
+    <SignInButton
       type="button"
       variant="outline"
       onClick={signInWithGoogle}
       disabled={isGoogleLoading}
     >
       {isGoogleLoading ? (
-        <Loader2 className="mr-2 size-4 animate-spin" />
+        <LoaderIcon />
       ) : (
-        <Image
+        <ProviderIcon
           src="https://authjs.dev/img/providers/google.svg"
           alt="Google logo"
           width={20}
           height={20}
-          className="mr-2"
         />
       )}{" "}
       Sign in with Google
-    </Button>
+    </SignInButton>
   );
 }
