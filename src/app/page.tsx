@@ -3,7 +3,20 @@ import { getSEOTags } from "@/lib/seo/seo";
 import Link from "next/link";
 import tw, { styled } from 'twin.macro';
 
-// SEO metadata for the home page
+/**
+ * Home Page - Server Component
+ * 
+ * This is the main landing page of your application.
+ * It's a server component that:
+ * 1. Sets SEO metadata
+ * 2. Renders the landing page content
+ * 3. Provides quick access to documentation
+ * 
+ * Note: Keep this component simple and move complex logic
+ * to client components within HomeContent
+ */
+
+// SEO metadata configuration
 export const metadata = getSEOTags({
   title: "Home",
   canonicalUrlRelative: "/",
@@ -11,26 +24,18 @@ export const metadata = getSEOTags({
 
 // Styled components
 const DocsLink = styled(Link)`
-  ${tw`fixed bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors`}
+  ${tw`fixed bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors z-50`}
 `;
 
-/**
- * Home Page Component
- * 
- * This is the main landing page of your application.
- * It uses the HomeContent component which contains all the sections
- * (Hero, Features, Pricing, etc.)
- * 
- * You can:
- * 1. Modify the HomeContent component to change the landing page sections
- * 2. Add additional components or sections here
- * 3. Customize the SEO metadata above
- */
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <HomeContent />
-      <DocsLink href="https://flarestack.io/docs" target="_blank">
+      <DocsLink 
+        href="https://flarestack.io/docs" 
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         View Documentation
       </DocsLink>
     </>

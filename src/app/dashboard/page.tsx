@@ -1,57 +1,91 @@
 import { protectPage } from "@/lib/auth/utils/protection";
 import { createClient } from "@/lib/supabase/supabaseServer";
+import tw, { styled } from 'twin.macro';
 
 /**
- * Dashboard Page Component
+ * Dashboard Page - Server Component
  * 
- * This is a server component that demonstrates:
- * 1. Authentication protection
- * 2. Server-side data fetching
- * 3. Integration with Supabase
+ * This is a protected server component that demonstrates:
+ * 1. Route protection using protectPage utility
+ * 2. Server-side data fetching with Supabase
+ * 3. Type-safe database queries
  * 
- * You can:
- * 1. Add your own dashboard UI components
- * 2. Fetch additional data from Supabase or other sources
- * 3. Implement real-time subscriptions
- * 4. Add more protected routes following this pattern
+ * Key features:
+ * - Uses protectPage() for authentication check
+ * - Automatically redirects to /login if not authenticated
+ * - Can fetch data server-side for better performance
+ * - Supports real-time updates (through client components)
  * 
  * @example
- * // Fetch user's data from Supabase
- * const { data } = await supabase
- *   .from('your_table')
+ * // Example of fetching user-specific data:
+ * const { data: userProfile } = await supabase
+ *   .from('profiles')
  *   .select('*')
- *   .eq('user_id', user.id);
+ *   .eq('id', user.id)
+ *   .single();
  */
+
+// Styled components
+const Container = styled.div`
+  ${tw`container mx-auto p-8`}
+`;
+
+const Title = styled.h1`
+  ${tw`text-2xl font-bold mb-4`}
+`;
+
+const UserEmail = styled.p`
+  ${tw`text-muted-foreground`}
+`;
+
+const HelpText = styled.p`
+  ${tw`mt-4 text-sm text-muted-foreground`}
+`;
+
+const CodeBlock = styled.code`
+  ${tw`text-primary`}
+`;
+
 export default async function DashboardPage() {
-  // Protect this page - redirects to login if not authenticated
+  // Authentication check - redirects to /login if not authenticated
   const user = await protectPage();
   
-  // Initialize Supabase client
+  // Initialize Supabase client for server-side data fetching
   const supabase = createClient();
 
-  // Example of server-side data fetching
-  // Uncomment and modify as needed:
-  /*
-  const { data: userProfile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
-  */
+  /**
+   * Example of server-side data fetching
+   * Uncomment and modify based on your database schema
+   * 
+   * const { data: profile } = await supabase
+   *   .from('profiles')
+   *   .select(`
+   *     id,
+   *     full_name,
+   *     avatar_url,
+   *     subscription_status,
+   *     created_at
+   *   `)
+   *   .eq('id', user.id)
+   *   .single();
+   */
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4">
-        Welcome to your Dashboard
-      </h1>
-      <p className="text-muted-foreground">
-        This is a protected page. You are logged in as: {user.email}
-      </p>
-      <p className="mt-4 text-sm text-muted-foreground">
-        Start building your dashboard by modifying this page in:
+    <Container>
+      <Title>Welcome to your Dashboard</Title>
+      <UserEmail>
+        You are logged in as: {user.email}
+      </UserEmail>
+      <HelpText>
+        Start building your dashboard by modifying:
         <br />
-        <code className="text-primary">src/app/dashboard/page.tsx</code>
-      </p>
-    </div>
+        <CodeBlock>src/app/dashboard/page.tsx</CodeBlock>
+      </HelpText>
+      <HelpText>
+        Add server-side data fetching using Supabase queries in this file.
+        <br />
+        Create client components for interactive features.
+      </HelpText>
+    </Container>
   );
 }
