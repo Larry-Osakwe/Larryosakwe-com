@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpToLine } from "lucide-react";
+import tw, { styled } from 'twin.macro';
+
+const ScrollButton = styled(Button)`
+  ${tw`fixed bottom-4 right-4 opacity-90 shadow-md`}
+`;
+const ScrollIcon = styled(ArrowUpToLine)`
+  ${tw`h-4 w-4`}
+`;
 
 export const ScrollToTop = () => {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -25,13 +33,12 @@ export const ScrollToTop = () => {
   return (
     <>
       {showTopBtn && (
-        <Button
+        <ScrollButton
           onClick={goToTop}
-          className="fixed bottom-4 right-4 opacity-90 shadow-md"
           size="icon"
         >
-          <ArrowUpToLine className="h-4 w-4" />
-        </Button>
+          <ScrollIcon />
+        </ScrollButton>
       )}
     </>
   );
