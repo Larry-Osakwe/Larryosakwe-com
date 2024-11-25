@@ -1,9 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { config } from '@/config';
 import { Button } from '../ui/button';
 import { Calendar } from 'lucide-react';
+import tw, { styled } from 'twin.macro';
+
+// Styled components
+const SchedulerButton = styled(Button)`
+  ${tw`flex items-center gap-2`}
+`;
+
+const CalendarIcon = styled(Calendar)`
+  ${tw`h-4 w-4`}
+`;
 
 declare global {
   interface Window {
@@ -27,12 +36,9 @@ export function ButtonScheduler() {
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      className="gap-2"
-    >
-      <Calendar className="h-4 w-4" />
+    <SchedulerButton onClick={handleClick}>
+      <CalendarIcon />
       Schedule a Call
-    </Button>
+    </SchedulerButton>
   );
 }

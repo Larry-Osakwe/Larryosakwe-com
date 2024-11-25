@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
 import { SVGProps } from "react";
-import Image from 'next/image';
-
 
 type IconProps = React.HTMLAttributes<SVGElement>
 // TODO: Replace this SVG with your own logo

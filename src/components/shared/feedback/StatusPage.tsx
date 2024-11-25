@@ -23,10 +23,10 @@ const SpamNote = styled.p`
 `;
 
 interface StatusPageProps {
-    title: string;
-    message: string;
+  title: string;
+  message: string;
 }
-  
+
 export function StatusPage({ title, message }: StatusPageProps) {
   return (
     <PageContainer>
