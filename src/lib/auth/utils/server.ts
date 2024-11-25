@@ -29,7 +29,7 @@ export async function requireAuth(): Promise<AuthUser> {
 
 export async function requirePaidUser(): Promise<AuthUser> {
   const user = await requireAuth();
-  
+
   if (!user.hasAccess) {
     throw new Error('Subscription required');
   }

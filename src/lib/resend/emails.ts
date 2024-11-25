@@ -1,12 +1,14 @@
-import { Resend } from 'resend';
-import { PurchaseEmail, WelcomeEmail, PasswordChangedEmail } from '@/components/Emails';
+import { createResendClient } from './client';
+import { PurchaseEmail, PasswordChangedEmail } from '@/components/emails';
+import type { EmailResponse } from './types';
+import { config } from '@/config';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function sendPurchaseEmail(customerEmail: string, productName: string) {
+export async function sendPurchaseEmail(customerEmail: string, productName: string): Promise<EmailResponse> {
+  const resend = createResendClient();
   try {
     const { data, error } = await resend.emails.send({
-      from: 'FlareStack <info@flarestack.io>',
+      from: `${config.resend.from.name} <${config.resend.from.email}>`,
+      replyTo: config.resend.replyTo,
       to: customerEmail,
       subject: 'Thank you for your purchase!',
       react: PurchaseEmail({
@@ -28,10 +30,12 @@ export async function sendPurchaseEmail(customerEmail: string, productName: stri
   }
 }
 
-export async function sendPasswordChangedEmail(email: string) {
+export async function sendPasswordChangedEmail(email: string): Promise<EmailResponse> {
+  const resend = createResendClient();
   try {
     const { data, error } = await resend.emails.send({
-      from: 'FlareStack <info@flarestack.io>',
+      from: `${config.resend.from.name} <${config.resend.from.email}>`,
+      replyTo: config.resend.replyTo,
       to: email,
       subject: 'Your FlareStack Password Has Been Changed',
       react: PasswordChangedEmail({
@@ -40,15 +44,13 @@ export async function sendPasswordChangedEmail(email: string) {
     });
 
     if (error) {
-      console.error("Failed to send password changed email:", error);
+      console.error("Failed to send email:", error);
       return { error };
     }
 
     return { data };
   } catch (e) {
-    console.error("Password changed email sending error:", e);
+    console.error("Email sending error:", e);
     return { error: e };
   }
 }
-
-// Add other email sending functions as needed 

@@ -11,10 +11,10 @@ interface UseAuthOptions {
   onSuccess?: () => void;
 }
 
-export function useAuth({ 
-  redirectTo, 
-  onError, 
-  onSuccess 
+export function useAuth({
+  redirectTo,
+  onError,
+  onSuccess
 }: UseAuthOptions = {}) {
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
