@@ -26,7 +26,12 @@ const TabsContainer = styled.div`
   ${tw`relative w-full flex justify-center`}
 `;
 const ScrollContainer = styled.div`
-  ${tw`overflow-auto scrollbar-hide`}
+  ${tw`overflow-auto`}
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 const StyledTabsList = styled(TabsList)`
   ${tw`inline-flex h-10 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground`}
@@ -34,8 +39,8 @@ const StyledTabsList = styled(TabsList)`
 const StyledTabsTrigger = styled(TabsTrigger)`
   ${tw`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[100px]`}
 `;
-const FeatureIcon = styled.span`
-  ${tw`w-4 h-4 mr-2`}
+const StyledCardTitle = styled(CardTitle)`
+  ${tw`text-2xl`}
 `;
 const FeatureList = styled.ul`
   ${tw`space-y-2`}
@@ -174,9 +179,7 @@ export const Features = () => {
             <StyledTabsList>
               {Object.entries(features).map(([key, feature]) => (
                 <StyledTabsTrigger key={key} value={key}>
-                  <FeatureIcon>
-                    <feature.icon />
-                  </FeatureIcon>
+                  <feature.icon className="w-4 h-4 mr-2" />
                   <span>{feature.title}</span>
                 </StyledTabsTrigger>
               ))}
@@ -188,7 +191,7 @@ export const Features = () => {
           <TabsContent key={key} value={key}>
             <Card>
               <CardHeader>
-                <CardTitle>{feature.title}</CardTitle>
+                <StyledCardTitle>{feature.title}</StyledCardTitle>
                 <CardDescription>{feature.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

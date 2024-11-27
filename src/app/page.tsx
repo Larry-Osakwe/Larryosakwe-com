@@ -1,7 +1,6 @@
 import { HomeContent } from "@/components/home/HomeContent";
 import { getSEOTags } from "@/lib/seo/seo";
 import Link from "next/link";
-import tw, { styled } from 'twin.macro';
 
 /**
  * Home Page - Server Component
@@ -22,22 +21,16 @@ export const metadata = getSEOTags({
   canonicalUrlRelative: "/",
 });
 
-// Styled components
-const DocsLink = styled(Link)`
-  ${tw`fixed bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors z-50`}
-`;
-
 export default function HomePage() {
   return (
     <>
       <HomeContent />
-      <DocsLink 
-        href="https://flarestack.io/docs" 
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href="https://flarestack.io/docs"
+        className="fixed bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors z-50"
       >
         View Documentation
-      </DocsLink>
+      </Link>
     </>
   );
 }

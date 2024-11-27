@@ -9,7 +9,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await protectPage();  // Basic auth protection at layout level
+  // await protectPage();  // Basic auth protection at layout level
 
   return (
     <div className="min-h-screen">

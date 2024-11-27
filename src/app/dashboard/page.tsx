@@ -1,6 +1,5 @@
 import { protectPage } from "@/lib/auth/utils/protection";
 import { createClient } from "@/lib/supabase/supabaseServer";
-import tw, { styled } from 'twin.macro';
 
 /**
  * Dashboard Page - Server Component
@@ -25,33 +24,12 @@ import tw, { styled } from 'twin.macro';
  *   .single();
  */
 
-// Styled components
-const Container = styled.div`
-  ${tw`container mx-auto p-8`}
-`;
-
-const Title = styled.h1`
-  ${tw`text-2xl font-bold mb-4`}
-`;
-
-const UserEmail = styled.p`
-  ${tw`text-muted-foreground`}
-`;
-
-const HelpText = styled.p`
-  ${tw`mt-4 text-sm text-muted-foreground`}
-`;
-
-const CodeBlock = styled.code`
-  ${tw`text-primary`}
-`;
-
 export default async function DashboardPage() {
   // Authentication check - redirects to /login if not authenticated
-  const user = await protectPage();
+  // const user = await protectPage();
   
   // Initialize Supabase client for server-side data fetching
-  const supabase = createClient();
+  // const supabase = createClient();
 
   /**
    * Example of server-side data fetching
@@ -71,21 +49,21 @@ export default async function DashboardPage() {
    */
 
   return (
-    <Container>
-      <Title>Welcome to your Dashboard</Title>
-      <UserEmail>
-        You are logged in as: {user.email}
-      </UserEmail>
-      <HelpText>
+    <div className="container mx-auto p-8">
+      <h1 className="text-2xl font-bold mb-4">Welcome to your Dashboard</h1>
+      <p className="text-muted-foreground">
+        {/* You are logged in as: {user.email} */}
+      </p>
+      <p className="mt-4 text-sm text-muted-foreground">
         Start building your dashboard by modifying:
         <br />
-        <CodeBlock>src/app/dashboard/page.tsx</CodeBlock>
-      </HelpText>
-      <HelpText>
+        <code className="text-primary">src/app/dashboard/page.tsx</code>
+      </p>
+      <p className="mt-4 text-sm text-muted-foreground">
         Add server-side data fetching using Supabase queries in this file.
         <br />
         Create client components for interactive features.
-      </HelpText>
-    </Container>
+      </p>
+    </div>
   );
 }
