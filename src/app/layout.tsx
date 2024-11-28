@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme";
+
 import { OpenPanelComponent } from '@openpanel/nextjs';
 import { getSEOTags } from "@/lib/seo/seo";
 

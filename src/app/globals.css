@@ -101,9 +101,9 @@ body {
     --popover-foreground: 0 0% 100%; /* White text on popovers */
 
     /* Primary and Secondary Colors */
-    --primary: 23 83% 48%; /* Orange #ff9a15 */
+    --primary: 23 83% 48%; /* Orange #e26215 */
     --primary-foreground: 0 0% 0%; /* Black text on primary background */
-    --secondary: 34 100% 54%; /* Orange #e26215 */
+    --secondary: 34 100% 54%; /* Orange #ff9a15 */  
     --secondary-foreground: 0 0% 100%; /* White text on secondary background */
 
     /* Muted and Accent Colors */
