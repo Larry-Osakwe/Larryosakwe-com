@@ -19,7 +19,7 @@ const navItems = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { scrollY } = useScroll()
-  const width = useTransform(scrollY, [0, 100], ["100%", "80%"])
+  const width = useTransform(scrollY, [0, 100], ["100%", "60%"])
   const height = useTransform(scrollY, [0, 100], ["6rem", "4rem"])
   const borderRadius = useTransform(scrollY, [0, 100], ["0.5rem", "2rem"])
   const nameOpacity = useTransform(scrollY, [0, 50], [1, 0])
@@ -30,26 +30,34 @@ export function Navbar() {
     [0, 100],
     ["0 4px 6px rgba(255, 154, 21, 0.1)", "0 8px 15px rgba(255, 154, 21, 0.2)"]
   )
+  const translateX = useTransform(scrollY, [0, 50], [0, 50])
+  const translateXReverse = useTransform(scrollY, [0, 50], [0, -50])
 
   return (
     <motion.nav
-      className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50"
+      className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50 overflow-hidden"
       style={{ width, height, borderRadius, boxShadow }}
     >
-      <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between relative">
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-8">
+        <motion.div 
+          className="hidden md:flex space-x-8"
+          style={{ x: translateX }}
+        >
           {navItems.slice(0, 3).map((item) => (
             <NavItem key={item.name} {...item} />
           ))}
-        </div>
+        </motion.div>
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 font-extrabold text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden md:block"
+          className="absolute left-1/2 -translate-x-1/2 font-extrabold text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden md:block pointer-events-none"
           style={{ opacity: nameOpacity }}
         >
           LARRY OSAKWE
         </motion.div>
-        <div className="hidden md:flex space-x-8 items-center">
+        <motion.div 
+          className="hidden md:flex space-x-8 items-center"
+          style={{ x: translateXReverse }}
+        >
           {navItems.slice(3).map((item) => (
             <NavItem key={item.name} {...item} />
           ))}
@@ -61,7 +69,7 @@ export function Navbar() {
               Hire Me
             </Button>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Mobile Navigation */}
         <div className="md:hidden flex justify-between items-center w-full">
