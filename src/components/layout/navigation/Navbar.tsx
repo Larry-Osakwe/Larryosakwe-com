@@ -1,144 +1,87 @@
-import { useState } from "react";
-import tw, { styled } from 'twin.macro';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { buttonVariants } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { ModeToggle } from "@/components/theme/ModeToggle";
-import { LogoIcon } from "@/components/shared/icons/Icons";
-import { config } from "@/config"
-import { ButtonCheckout } from "@/components/checkout/ButtonCheckout";
-import ButtonSignIn from "@/components/auth/common/ButtonSignIn";
+"use client"
 
-// Styled components
-const HeaderWrapper = styled.header`
-  ${tw`sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background`}
-`;
-const StyledNavigationMenu = styled(NavigationMenu)`
-  ${tw`mx-auto`}
-`;
-const StyledNavigationMenuList = styled(NavigationMenuList)`
-  ${tw`container h-14 px-4 w-screen flex justify-between`}
-`;
-const LogoMenuItem = styled(NavigationMenuItem)`
-  ${tw`font-bold flex`}
-`;
-const LogoLink = styled.a`
-  ${tw`ml-2 font-bold text-xl flex`}
-`;
-const MobileActions = styled.span`
-  ${tw`flex md:hidden`}
-`;
-const DesktopNav = styled.nav`
-  ${tw`hidden md:flex gap-2`}
-`;
-const DesktopActions = styled.div`
-  ${tw`hidden md:flex gap-2`}
-`;
-const MobileNavContent = styled.nav`
-  ${tw`flex flex-col justify-center items-center gap-2 mt-4`}
-`;
-const StyledSheetTrigger = styled(SheetTrigger)`
-  ${tw`px-2`}
-`;
-const MenuIcon = styled(Menu)`
-  ${tw`flex md:hidden h-5 w-5`}
-`;
-const SheetTitleWrapper = styled.div`
-  ${tw`font-bold text-xl`}
-`;
-const NavLink = styled.a`
-  ${tw`text-[17px]`}
-`;
+import * as React from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
-// Navigation items configuration
 const navItems = [
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
-  { href: "/docs", label: "Docs" },
-];
+  { name: "Home", href: "#" },
+  { name: "About", href: "#about" },
+  { name: "Projects", href: "#projects" },
+  { name: "Skills", href: "#skills" },
+  { name: "Blog", href: "#blog" },
+  { name: "Contact", href: "#contact" },
+]
 
-export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+export function Navbar() {
+  const { scrollY } = useScroll()
+  const width = useTransform(scrollY, [0, 100], ["100%", "90%"])
+  const height = useTransform(scrollY, [0, 100], ["6rem", "4rem"])
+  const borderRadius = useTransform(scrollY, [0, 100], ["0.5rem", "2rem"])
+  const nameOpacity = useTransform(scrollY, [0, 50], [1, 0])
+  const buttonWidth = useTransform(scrollY, [0, 100], ["auto", "7rem"])
+  const buttonBorderRadius = useTransform(scrollY, [0, 100], ["0.5rem", "2rem"])
+  const boxShadow = useTransform(
+    scrollY,
+    [0, 100],
+    ["0 4px 6px rgba(255, 154, 21, 0.1)", "0 8px 15px rgba(255, 154, 21, 0.2)"]
+  )
 
   return (
-    <HeaderWrapper>
-      <StyledNavigationMenu>
-        <StyledNavigationMenuList>
-          {/* Logo and App Name */}
-          <LogoMenuItem>
-            <LogoLink href="/" rel="noreferrer noopener">
-              <LogoIcon />
-              <span>{config.appName.toUpperCase()}</span>
-            </LogoLink>
-          </LogoMenuItem>
+    <motion.nav
+      className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50 flex items-center justify-between px-8"
+      style={{ width, height, borderRadius, boxShadow }}
+    >
+      <div className="flex space-x-6">
+        {navItems.slice(0, 3).map((item) => (
+          <NavItem key={item.name} {...item} />
+        ))}
+      </div>
+      <motion.div
+        className="absolute left-1/2 -translate-x-1/2 font-extrabold text-3xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+        style={{ opacity: nameOpacity }}
+      >
+        LARRY OSAKWE
+      </motion.div>
+      <div className="flex space-x-6 items-center">
+        {navItems.slice(3).map((item) => (
+          <NavItem key={item.name} {...item} />
+        ))}
+        <motion.div style={{ width: buttonWidth }}>
+          <Button
+            className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
+            style={{ borderRadius: buttonBorderRadius.get() }}
+          >
+            Hire Me
+          </Button>
+        </motion.div>
+      </div>
+    </motion.nav>
+  )
+}
 
-          {/* Mobile Navigation */}
-          <MobileActions>
-            <ModeToggle />
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <StyledSheetTrigger>
-                <MenuIcon onClick={() => setIsOpen(true)} aria-label="Menu Icon" />
-              </StyledSheetTrigger>
+function NavItem({ name, href }: { name: string; href: string }) {
+  const [isHovered, setIsHovered] = React.useState(false)
 
-              <SheetContent side="left">
-                <SheetHeader>
-                  <LogoIcon />
-                  <SheetTitle>
-                    <SheetTitleWrapper>{config.appName}</SheetTitleWrapper>
-                  </SheetTitle>
-                </SheetHeader>
-                <MobileNavContent>
-                  {navItems.map((route, i) => (
-                    <NavLink
-                      key={i}
-                      href={route.href}
-                      onClick={() => setIsOpen(false)}
-                      className={buttonVariants({ variant: "ghost" })}
-                    >
-                      {route.label}
-                    </NavLink>
-                  ))}
-                  <ButtonCheckout
-                    priceId={config.stripe.plans[1].priceId}
-                    mode={config.stripe.plans[1].mode}
-                  />
-                </MobileNavContent>
-              </SheetContent>
-            </Sheet>
-          </MobileActions>
+  return (
+    <motion.a
+      href={href}
+      className={cn(
+        "relative text-foreground transition-colors duration-200 font-medium",
+        isHovered && "text-primary"
+      )}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      {name}
+      <motion.div
+        className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
+      />
+    </motion.a>
+  )
+}
 
-          {/* Desktop Navigation */}
-          <DesktopNav>
-            {navItems.map((route, i) => (
-              <NavLink
-                key={i}
-                href={route.href}
-                className={buttonVariants({ variant: "ghost" })}
-              >
-                {route.label}
-              </NavLink>
-            ))}
-          </DesktopNav>
-
-          {/* Desktop Actions */}
-          <DesktopActions>
-            <ButtonSignIn />
-            <ModeToggle />
-          </DesktopActions>
-        </StyledNavigationMenuList>
-      </StyledNavigationMenu>
-    </HeaderWrapper>
-  );
-};
