@@ -33,9 +33,9 @@ const COUPON_IDS = {
 
 export const config: AppConfig = {
   // Core Application Settings
-  appName: "Your App Name",                  // Used throughout the app for SEO and branding
-  appDescription: "A compelling description of your application in 1-2 sentences", // Used for SEO meta tags
-  domainName: "yourdomain.com",              // Your domain without protocol (e.g., myapp.com)
+  appName: "Larry Osakwe",                  // Used throughout the app for SEO and branding
+  appDescription: "A one man development studio", // Used for SEO meta tags
+  domainName: "larryosakwe.com",              // Your domain without protocol (e.g., myapp.com)
 
   stripe: {
     plans: [
@@ -107,12 +107,12 @@ export const config: AppConfig = {
    */
   resend: {
     from: {
-      name: "Awesome App",                    // Display name for outgoing emails
-      email: "info@awesomeapp.com"            // Email address for sending
+      name: "Larry Osakwe",                    // Display name for outgoing emails
+      email: "larry@larryosakwe.com"            // Email address for sending
     },
     support: {
-      email: "gethelp@awesomeapp.com",          // Address for receiving support inquiries
+      email: "larry@laflarela.com",          // Address for receiving support inquiries
     },
-    replyTo: "gethelp@awesomeapp.com"           // Default reply-to address
+    replyTo: "larry@laflarela.com"           // Default reply-to address
   }
 };
