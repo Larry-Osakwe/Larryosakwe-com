@@ -8,7 +8,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Menu } from "lucide-react"
 
 const navItems = [
-  { name: "Home", href: "#" },
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
@@ -19,7 +18,8 @@ const navItems = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { scrollY } = useScroll()
-  const width = useTransform(scrollY, [0, 100], ["100%", "60%"])
+  const desktopWidth = useTransform(scrollY, [0, 100], ["100%", "60%"])
+  const mobileWidth = useTransform(scrollY, [0, 100], ["100%", "90%"])
   const height = useTransform(scrollY, [0, 100], ["6rem", "4rem"])
   const borderRadius = useTransform(scrollY, [0, 100], ["0.5rem", "2rem"])
   const nameOpacity = useTransform(scrollY, [0, 50], [1, 0])
@@ -32,84 +32,101 @@ export function Navbar() {
   )
   const translateX = useTransform(scrollY, [0, 50], [0, 50])
   const translateXReverse = useTransform(scrollY, [0, 50], [0, -50])
+  const mobileGap = useTransform(scrollY, [0, 100], ["1rem", "3rem"])
 
   return (
-    <motion.nav
-      className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50 overflow-hidden"
-      style={{ width, height, borderRadius, boxShadow }}
-    >
-      <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between relative">
-        {/* Desktop Navigation */}
-        <motion.div 
-          className="hidden md:flex space-x-8"
-          style={{ x: translateX }}
-        >
-          {navItems.slice(0, 3).map((item) => (
-            <NavItem key={item.name} {...item} />
-          ))}
-        </motion.div>
-        <motion.div
-          className="absolute left-1/2 -translate-x-1/2 font-extrabold text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden md:block pointer-events-none"
-          style={{ opacity: nameOpacity }}
-        >
-          LARRY OSAKWE
-        </motion.div>
-        <motion.div 
-          className="hidden md:flex space-x-8 items-center"
-          style={{ x: translateXReverse }}
-        >
-          {navItems.slice(3).map((item) => (
-            <NavItem key={item.name} {...item} />
-          ))}
-          <motion.div style={{ width: buttonWidth }} className="ml-2">
-            <Button
-              className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
-              style={{ borderRadius: buttonBorderRadius.get() }}
-            >
-              Hire Me
-            </Button>
+    <>
+      {/* Desktop Navbar */}
+      <motion.nav
+        className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50 overflow-hidden hidden md:block"
+        style={{ width: desktopWidth, height, borderRadius, boxShadow }}
+      >
+        <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between relative">
+          <motion.div 
+            className="space-x-8"
+            style={{ x: translateX }}
+          >
+            {navItems.slice(0, 3).map((item) => (
+              <NavItem key={item.name} {...item} />
+            ))}
           </motion.div>
-        </motion.div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden flex justify-between items-center w-full">
-          <div className="font-extrabold text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <motion.a
+            href="#"
+            className="absolute left-1/2 -translate-x-1/2 font-extrabold text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+            style={{ opacity: nameOpacity }}
+          >
             LARRY OSAKWE
-          </div>
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
+          </motion.a>
+          <motion.div 
+            className="space-x-8 items-center flex"
+            style={{ x: translateXReverse }}
+          >
+            {navItems.slice(3).map((item) => (
+              <NavItem key={item.name} {...item} />
+            ))}
+            <motion.div style={{ width: buttonWidth }} className="ml-2">
+              <Button
+                className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
+                style={{ borderRadius: buttonBorderRadius.get() }}
+              >
+                Hire Me
               </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[300px]">
-              <SheetHeader>
-                <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  LARRY OSAKWE
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col space-y-4 mt-8">
-                {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-lg font-medium hover:text-primary transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-                <Button
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
-                >
-                  Hire Me
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
+
+      {/* Mobile Navbar */}
+      <motion.nav
+        className="fixed top-6 left-1/2 -translate-x-1/2 bg-card z-50 overflow-hidden md:hidden"
+        style={{ width: mobileWidth, height, borderRadius, boxShadow }}
+      >
+        <div className="h-full px-6">
+          <motion.div 
+            className="flex justify-between items-center w-full h-full"
+            style={{ gap: mobileGap }}
+          >
+            <a 
+              href="#"
+              className="font-extrabold text-lg whitespace-nowrap bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            >
+              LARRY OSAKWE
+            </a>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px]">
+                <SheetHeader>
+                  <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    LARRY OSAKWE
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col space-y-4 mt-8">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="text-lg font-medium hover:text-primary transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                  <Button
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
+                  >
+                    Hire Me
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </motion.div>
+        </div>
+      </motion.nav>
+    </>
   )
 }
 

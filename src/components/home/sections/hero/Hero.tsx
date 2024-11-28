@@ -32,6 +32,16 @@ const StyledImage = styled(Image)`
 export const Hero = () => {
   return (
     <HeroSection>
+      <ImageWrapper>
+        <StyledImage
+          src="/hero-image.png"
+          alt="FlareStack Hero Image"
+          width={700}
+          height={500}
+          priority
+        />
+      </ImageWrapper>
+
       <ContentWrapper>
         <MainHeading>
           <h1 className="inline">
@@ -55,16 +65,6 @@ export const Hero = () => {
           />
         </ButtonWrapper>
       </ContentWrapper>
-
-      <ImageWrapper>
-        <StyledImage
-          src="/hero-image.png"
-          alt="FlareStack Hero Image"
-          width={700}
-          height={500}
-          priority
-        />
-      </ImageWrapper>
     </HeroSection>
   );
 };
