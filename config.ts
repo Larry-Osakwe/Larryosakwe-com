@@ -96,7 +96,7 @@ export const config: AppConfig = {
   scheduler: {
     enabled: true,
     defaultConfig: {
-      url: '',                               // Your Google Calendar URL
+      url: 'https://calendar.app.google/zCUMDobyyD5gjJWw7',                               // Your Google Calendar URL
       color: '#f97316',                      // Brand color for the scheduler
       label: 'Book an appointment',
       inline: false,                         // false: show as button, true: show as iframe

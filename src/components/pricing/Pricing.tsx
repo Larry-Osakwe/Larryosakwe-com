@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowRight, Sparkles, Zap } from 'lucide-react'
+import { ArrowRight, Calendar, Sparkles, Zap } from 'lucide-react'
 import { useState } from "react"
 import { config } from "@/config"
 import { cn } from "@/lib/utils"
@@ -44,15 +44,26 @@ export const Pricing = () => {
             </h2>
 
             <div className="space-y-6">
-              <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Book a 15-min intro call</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Learn how I can help turn your ideas into production-ready features.
-                  </p>
-                  <ArrowRight className="text-secondary" />
-                </CardContent>
-              </Card>
+              <a 
+                href={config.scheduler.defaultConfig.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">Book a 15-min intro call</h3>
+                    <p className="text-muted-foreground text-sm mb-4">
+                      Learn how I can help turn your ideas into production-ready features.
+                    </p>
+                    <div className="flex items-center gap-2 text-secondary">
+                      <Calendar className="h-4 w-4" />
+                      <span className="text-sm font-medium">View available times</span>
+                      <ArrowRight className="h-4 w-4 ml-auto" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
 
               <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
                 <CardContent className="p-6">
@@ -129,7 +140,9 @@ export const Pricing = () => {
 
           <div className="flex items-center gap-4">
             <a
-              href={`mailto:${config.resend.support.email}?subject=Interested in ${currentPlan.name} Plan`}
+              href={config.scheduler.defaultConfig.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full"
             >
               <Button 
@@ -146,7 +159,9 @@ export const Pricing = () => {
               </Button>
             </a>
             <a
-              href={`mailto:${config.resend.support.email}?subject=Book a call about ${currentPlan.name} Plan`}
+              href={config.scheduler.defaultConfig.url}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Button variant="link" className="text-secondary hover:text-primary">
                 or book a call
