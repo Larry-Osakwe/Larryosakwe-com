@@ -25,12 +25,6 @@ export default function HomePage() {
   return (
     <>
       <HomeContent />
-      <Link
-        href="https://flarestack.io/docs"
-        className="fixed bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors z-50"
-      >
-        View Documentation
-      </Link>
     </>
   );
 }

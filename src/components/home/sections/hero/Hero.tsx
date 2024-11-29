@@ -21,7 +21,7 @@ const Description = styled.p`
   ${tw`text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0`}
 `;
 const ButtonWrapper = styled.div`
-  ${tw`space-y-4 md:space-y-0 md:space-x-4`}
+  ${tw`flex flex-col md:flex-row items-center justify-center lg:justify-start gap-4 pt-4`}
 `;
 const ImageWrapper = styled.div`
   ${tw`z-10 w-full h-full relative`}
@@ -61,8 +61,12 @@ export const Hero = () => {
         </Description>
 
         <ButtonWrapper>
-          <Button>Get in touch</Button>
-          <Button variant="secondary">Check my work</Button>
+          <Button size="lg" className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
+            Get in touch
+          </Button>
+          <Button size="lg" variant="outline" className="w-full md:w-auto">
+            Check my work
+          </Button>
         </ButtonWrapper>
       </ContentWrapper>
     </HeroSection>

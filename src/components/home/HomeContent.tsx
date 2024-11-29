@@ -14,9 +14,6 @@ export function HomeContent() {
     <>
       <Navbar />
       <Hero />
-      <Features />
-      <Pricing />
-      <FAQ />
       <Footer />
       <ScrollToTop />
     </>
