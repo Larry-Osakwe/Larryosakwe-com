@@ -2,6 +2,7 @@ import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
 import { ButtonCheckout } from "@/components/checkout/ButtonCheckout";
 import { config } from "@/config"
+import { Button } from '@/components/ui/button';
 
 // Styled components
 const HeroSection = styled.section`
@@ -45,24 +46,23 @@ export const Hero = () => {
       <ContentWrapper>
         <MainHeading>
           <h1 className="inline">
-            <GradientSpan>Build</GradientSpan>{" "}
-            ideas faster with
+            <GradientSpan>Hi</GradientSpan>{", "}
+            I'm Larry
           </h1>{" "}
+          <br />
+          <h2 className="inline">I like to </h2>
           <h2 className="inline">
-            <GradientSpan>FlareStack</GradientSpan>
+            <GradientSpan>build</GradientSpan>
           </h2>
         </MainHeading>
 
         <Description>
-          Launch your next project in days, not weeks. Our well-documented Next.js boilerplate empowers developers to build and deploy quickly.
+          I'm a software engineer with a passion for building products that help people live better lives.
         </Description>
 
         <ButtonWrapper>
-          <ButtonCheckout
-            className="w-full md:w-1/3"
-            priceId={config.stripe.plans[1].priceId}
-            mode={config.stripe.plans[1].mode}
-          />
+          <Button>Get in touch</Button>
+          <Button variant="secondary">Check my work</Button>
         </ButtonWrapper>
       </ContentWrapper>
     </HeroSection>
