@@ -1,7 +1,8 @@
 import tw, { styled } from 'twin.macro';
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Wallet, BarChart } from "lucide-react";
+import { KeyRound, Wallet, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { Button } from '@/components/ui/button';
 
 const Section = styled.section`
   ${tw`container py-24 sm:py-32`}
@@ -19,13 +20,16 @@ const GradientSpan = styled.span`
   ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
 `;
 const Description = styled.p`
-  ${tw`text-muted-foreground text-xl mt-4 mb-8`}
+  ${tw`text-muted-foreground text-xl mt-4 mb-4`}
 `;
 const IconWrapper = styled.div`
   ${tw`mt-1 bg-primary/20 p-1 rounded-2xl`}
 `;
 const ServiceImage = styled(Image)`
   ${tw`object-contain rounded-lg`}
+`;
+const CTAWrapper = styled.div`
+  ${tw`mt-12 flex flex-col sm:flex-row items-center gap-4`}
 `;
 
 interface ServiceProps {
@@ -36,22 +40,22 @@ interface ServiceProps {
 
 const serviceList: ServiceProps[] = [
   {
-    title: "Code Collaboration",
+    title: "Authentication",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
-    icon: <BarChart />,
+      "Secure and easy authentication with Supabase. Google OAuth, Email/Password, and more.",
+    icon: <KeyRound />,
   },
   {
-    title: "Project Management",
+    title: "Payment Processing",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Secure and easy payment processing with Stripe. One-time payments, subscriptions, and more.",
     icon: <Wallet />,
   },
   {
-    title: "Task Automation",
+    title: "And More",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
-    icon: <Search />,
+      "Analytics, Email, Google Scheduling, Extensive component library, and more.",
+    icon: <Sparkles />,
   },
 ];
 
@@ -61,13 +65,12 @@ export const Services = () => {
       <Grid>
         <div>
           <Title>
-            <GradientSpan>Client-Centric </GradientSpan>
-            Services
+            <GradientSpan>FlareStack </GradientSpan>
+            Boilerplate
           </Title>
 
           <Description>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-            dolor.
+            The best Next.js boilerplate for your next project. Get your own site up and running in minutes. This site is built with FlareStack Boilerplate.
           </Description>
 
           <ContentColumn>
@@ -85,9 +88,18 @@ export const Services = () => {
               </Card>
             ))}
           </ContentColumn>
+
+          <CTAWrapper>
+            <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
+              Get Started
+            </Button>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto">
+              View Documentation
+            </Button>
+          </CTAWrapper>
         </div>
         <ServiceImage
-          src="https://cdn.pixabay.com/photo/2022/08/25/23/06/woman-7411414_1280.png"
+          src="/services-image.png"
           alt="background"
           width={500}
           height={400}
