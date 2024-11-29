@@ -2,6 +2,7 @@ import tw, { styled } from 'twin.macro';
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { KeyRound, Wallet, Sparkles } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from '@/components/ui/button';
 
 const Section = styled.section`
@@ -90,12 +91,16 @@ export const Services = () => {
           </ContentColumn>
 
           <CTAWrapper>
-            <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
-              Get Started
-            </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto">
-              View Documentation
-            </Button>
+            <Link href="https://flarestack.io" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
+                Get Started
+              </Button>
+            </Link>
+            <Link href="https://flarestack.io/docs" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full">
+                View Documentation
+              </Button>
+            </Link>
           </CTAWrapper>
         </div>
         <ServiceImage

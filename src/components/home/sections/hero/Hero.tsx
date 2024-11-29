@@ -3,6 +3,7 @@ import tw, { styled } from 'twin.macro';
 import { ButtonCheckout } from "@/components/checkout/ButtonCheckout";
 import { config } from "@/config"
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 // Styled components
 const HeroSection = styled.section`
@@ -61,12 +62,19 @@ export const Hero = () => {
         </Description>
 
         <ButtonWrapper>
-          <Button size="lg" className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
-            Get in touch
-          </Button>
-          <Button size="lg" variant="outline" className="w-full md:w-auto">
-            Check my work
-          </Button>
+          <a
+            href={`mailto:${config.resend.support.email}?subject=Get in touch with Larry`}
+            className="w-full md:w-auto"
+          >
+            <Button size="lg" className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90">
+              Get in touch
+            </Button>
+          </a>
+          <Link href="#projects" className="w-full md:w-auto">
+            <Button size="lg" variant="outline" className="w-full">
+              Check my work
+            </Button>
+          </Link>
         </ButtonWrapper>
       </ContentWrapper>
     </HeroSection>

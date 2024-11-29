@@ -8,12 +8,12 @@ import { AppConfig } from "@/types/config";
  */
 const PRICE_IDS = {
   development: {
-    starter: "your_dev_starter_price_id",    // e.g., price_1ABC123...
-    allIn: "your_dev_premium_price_id"       // e.g., price_1XYZ456...
+    standard: "your_dev_standard_price_id",
+    pro: "your_dev_pro_price_id"
   },
   production: {
-    starter: "your_prod_starter_price_id",   // e.g., price_1DEF789...
-    allIn: "your_prod_premium_price_id"      // e.g., price_1GHI012...
+    standard: "your_prod_standard_price_id",
+    pro: "your_prod_pro_price_id"
   }
 };
 
@@ -42,42 +42,47 @@ export const config: AppConfig = {
       {
         // Starter Plan Configuration
         priceId: process.env.NODE_ENV === "development" 
-          ? PRICE_IDS.development.starter 
-          : PRICE_IDS.production.starter,
-        name: "Starter",
-        description: "Your plan description",
-        price: 99,                           // Price in USD
-        priceAnchor: 199,                    // Optional: Original price for showing discounts
-        mode: 'payment',                     // 'payment' for one-time, 'subscription' for recurring
-        isFeatured: false,                   // Set to true to highlight this plan in the UI
-        couponId: process.env.NODE_ENV === "development"
-          ? COUPON_IDS.development.default
-          : COUPON_IDS.production.default,
+          ? PRICE_IDS.development.standard 
+          : PRICE_IDS.production.standard,
+        name: "Standard",
+        description: "One request at a time. Pause or cancel anytime.",
+        price: 4995,
+        mode: 'subscription',
+        isFeatured: false,
         features: [
-          { name: "Feature 1" },
-          { name: "Feature 2" },
-          { name: "Feature 3" },
+          { name: "One request at a time" },
+          { name: "Average 72 hour delivery" },
+          { name: "Full-stack development" },
+          { name: "Modern tech stack" },
+          { name: "User authentication" },
+          { name: "Database setup" },
+          { name: "API integration" },
+          { name: "Responsive design" },
+          { name: "Unlimited revisions" },
+          { name: "Pause or cancel anytime" }
         ],
       },
       {
         // Premium Plan Configuration
         priceId: process.env.NODE_ENV === "development" 
-          ? PRICE_IDS.development.allIn 
-          : PRICE_IDS.production.allIn,
-        name: "Premium",
-        description: "Your premium plan description",
-        price: 149,
-        priceAnchor: 249,
-        mode: 'payment',
-        isFeatured: true,                    // This plan will be highlighted in the pricing UI
-        couponId: process.env.NODE_ENV === "development"
-          ? COUPON_IDS.development.default
-          : COUPON_IDS.production.default,
+          ? PRICE_IDS.development.pro 
+          : PRICE_IDS.production.pro,
+        name: "Pro",
+        description: "Double the requests. Pause or cancel anytime.",
+        price: 7995,
+        mode: 'subscription',
+        isFeatured: true, // This plan will be highlighted in the pricing UI
         features: [
-          { name: "Everything in Starter" },
-          { name: "Premium Feature 1" },
-          { name: "Premium Feature 2" },
-          { name: "Premium Feature 3" },
+          { name: "Two requests at a time" },
+          { name: "Average 72 hour delivery" },
+          { name: "Full-stack development" },
+          { name: "Modern tech stack" },
+          { name: "User authentication" },
+          { name: "Database setup" },
+          { name: "API integration" },
+          { name: "Responsive design" },
+          { name: "Unlimited revisions" },
+          { name: "Pause or cancel anytime" }
         ],
       }
     ],

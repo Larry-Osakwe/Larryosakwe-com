@@ -1,164 +1,160 @@
-import tw, { styled } from 'twin.macro';
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, X } from "lucide-react";
-import { ButtonCheckout } from "@/components/checkout/ButtonCheckout";
-import { config } from "@/config";
-
-// Styled components
-const PricingSection = styled.section`
-  ${tw`container py-24 sm:py-32`}
-`;
-const MainTitle = styled.h2`
-  ${tw`text-3xl md:text-4xl font-bold text-center`}
-`;
-const GradientText = styled.span`
-  ${tw`bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text`}
-`;
-const Subtitle = styled.h3`
-  ${tw`text-xl text-center text-muted-foreground pt-4 pb-8`}
-`;
-const GridContainer = styled.div<{ $cols: number }>`
-  ${tw`grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center place-items-center`}
-  ${({ $cols }) => {
-    switch ($cols) {
-      case 1: return tw`lg:grid-cols-1`;
-      case 2: return tw`lg:grid-cols-2`;
-      case 3: return tw`lg:grid-cols-3`;
-      default: return tw`lg:grid-cols-4`;
-    }
-  }}
-`;
-const PricingCard = styled(Card) <{ $featured?: boolean }>`
-  ${tw`w-full max-w-sm`}
-  ${({ $featured }) => $featured && tw`drop-shadow-xl shadow-black/10 dark:shadow-white/10`}
-`;
-const PriceDisplay = styled.div`
-  ${tw`flex items-end gap-2`}
-`;
-const AnchorPrice = styled.span`
-  ${tw`text-xl line-through text-muted-foreground/70`}
-`;
-const CurrentPrice = styled.div`
-  ${tw`flex items-end`}
-`;
-const PriceAmount = styled.span`
-  ${tw`text-3xl font-bold`}
-`;
-const PriceInterval = styled.span`
-  ${tw`text-muted-foreground ml-1`}
-`;
-const Divider = styled.hr`
-  ${tw`w-4/5 m-auto mb-4`}
-`;
-const FeatureList = styled.div`
-  ${tw`space-y-4`}
-`;
-const FeatureItem = styled.span<{ $active?: boolean }>`
-  ${tw`flex items-center`}
-  ${({ $active }) => !$active && tw`text-muted-foreground/60`}
-`;
-const CheckIcon = styled(Check)`
-  ${tw`text-green-500 h-5 w-5`}
-`;
-const XIcon = styled(X)`
-  ${tw`text-muted-foreground/70 h-4 w-4`}
-`;
-const FeatureText = styled.h3`
-  ${tw`ml-2`}
-`;
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ArrowRight, Sparkles, Zap } from 'lucide-react'
+import { useState } from "react"
+import { config } from "@/config"
+import { cn } from "@/lib/utils"
 
 export const Pricing = () => {
-  const plans = config.stripe.plans;
-
-  // Get all unique features across all plans
-  const getAllFeatures = () => {
-    const allFeatures = new Set<string>();
-    plans.forEach(plan => {
-      plan.features.forEach(feature => {
-        allFeatures.add(feature.name);
-      });
-    });
-    return Array.from(allFeatures);
-  };
-
-  // Check if a plan has a specific feature
-  const hasPlanFeature = (plan: typeof plans[0], featureName: string) => {
-    return plan.features.some(f => f.name === featureName);
-  };
+  const [plan, setPlan] = useState<"standard" | "pro">("standard")
+  
+  const standardPlan = config.stripe.plans[0]
+  const proPlan = config.stripe.plans[1]
+  
+  const currentPlan = plan === "standard" ? standardPlan : proPlan
 
   return (
-    <PricingSection id="pricing">
-      <MainTitle>
-        Get
-        <GradientText> Unlimited </GradientText>
-        Access
-      </MainTitle>
-      <Subtitle>
-        Choose the perfect plan for your needs
-      </Subtitle>
-
-      <div className={`max-w-${plans.length > 2 ? '5xl' : '3xl'} mx-auto`}>
-        <GridContainer $cols={plans.length}>
-          {plans.map((plan) => (
-            <PricingCard key={plan.name} $featured={plan.isFeatured}>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  {plan.name}
-                  {plan.isFeatured && (
-                    <Badge variant="secondary" className="text-sm text-primary">
-                      Most popular
-                    </Badge>
-                  )}
-                </CardTitle>
-                <PriceDisplay>
-                  {plan.priceAnchor && (
-                    <AnchorPrice>${plan.priceAnchor}</AnchorPrice>
-                  )}
-                  <CurrentPrice>
-                    <PriceAmount>${plan.price}</PriceAmount>
-                    {plan.mode === 'subscription' && (
-                      <PriceInterval>/month</PriceInterval>
-                    )}
-                  </CurrentPrice>
-                </PriceDisplay>
-
-                <CardDescription>{plan.description}</CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <ButtonCheckout
-                  priceId={plan.priceId}
-                  mode={plan.mode}
-                />
-              </CardContent>
-
-              <Divider />
-
-              <CardFooter>
-                <FeatureList>
-                  {getAllFeatures().map((featureName) => {
-                    const hasFeature = hasPlanFeature(plan, featureName);
-                    return (
-                      <FeatureItem
-                        key={featureName}
-                        $active={hasFeature}
-                      >
-                        {hasFeature ? (
-                          <CheckIcon />
-                        ) : (
-                          <XIcon />
-                        )}
-                        <FeatureText>{featureName}</FeatureText>
-                      </FeatureItem>
-                    );
-                  })}
-                </FeatureList>
-              </CardFooter>
-            </PricingCard>
-          ))}
-        </GridContainer>
+    <section className="py-24 sm:py-32">
+      <div className="container mb-16 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Want your <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">MVP</span> built for you?
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Skip the hassle of building from scratch. Get a dedicated full-stack developer working on your product.
+        </p>
       </div>
-    </PricingSection>
-  );
-};
+
+      <div className="flex flex-col lg:flex-row gap-8 p-6 max-w-6xl mx-auto items-stretch">
+        {/* Left Panel */}
+        <Card className="flex-1 bg-background text-foreground rounded-3xl overflow-hidden relative">
+          <CardContent className="p-8">
+            {/* Decorative Blob */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-secondary rounded-full blur-2xl opacity-50" />
+            
+            <Badge variant="secondary" className="bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90 mb-6">
+              Limited spots available
+            </Badge>
+
+            <h2 className="text-5xl font-bold mb-12">
+              Let's Build
+              <br />
+              Together
+            </h2>
+
+            <div className="space-y-6">
+              <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Book a 15-min intro call</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Learn how I can help turn your ideas into production-ready features.
+                  </p>
+                  <ArrowRight className="text-secondary" />
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Refer a founder & earn</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Know someone who needs ongoing development? Get 5% monthly commission.
+                  </p>
+                  <ArrowRight className="text-secondary" />
+                </CardContent>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Right Panel */}
+        <div className="flex-1 p-8">
+          <h2 className="text-4xl font-bold mb-8">Subscription Plans</h2>
+
+          <Tabs defaultValue="standard" className="mb-8" onValueChange={(value) => setPlan(value as "standard" | "pro")}>
+            <TabsList className="bg-muted p-1 rounded-full">
+              <TabsTrigger
+                value="standard"
+                className="rounded-full px-6 data-[state=active]:bg-background"
+              >
+                Standard
+              </TabsTrigger>
+              <TabsTrigger
+                value="pro"
+                className={cn(
+                  "rounded-full px-6 data-[state=active]:bg-background group relative",
+                  proPlan.isFeatured && "data-[state=active]:bg-gradient-to-r data-[state=active]:from-secondary/20 data-[state=active]:to-primary/20"
+                )}
+              >
+                <Zap className="w-4 h-4 mr-1" />
+                Pro
+                {proPlan.isFeatured && (
+                  <Sparkles className="w-4 h-4 ml-1.5 text-secondary hidden group-data-[state=active]:block" />
+                )}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <div className="mb-8">
+            <div className="flex items-baseline gap-1 mb-2">
+              <span className={cn(
+                "text-5xl font-bold",
+                currentPlan.isFeatured 
+                  ? "bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"
+                  : "text-foreground"
+              )}>
+                ${currentPlan.price.toLocaleString()}
+              </span>
+              <span className="text-muted-foreground">/m</span>
+            </div>
+            <p className="text-muted-foreground">{currentPlan.description}</p>
+          </div>
+
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold mb-4">What's included</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {currentPlan.features.map(({ name }) => (
+                <div key={name} className="flex items-center gap-2">
+                  <div className={cn(
+                    "w-1 h-1 rounded-full",
+                    currentPlan.isFeatured 
+                      ? "bg-gradient-to-r from-secondary to-primary" 
+                      : "bg-secondary"
+                  )} />
+                  <span>{name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <a
+              href={`mailto:${config.resend.support.email}?subject=Interested in ${currentPlan.name} Plan`}
+              className="rounded-full"
+            >
+              <Button 
+                size="lg" 
+                className={cn(
+                  "rounded-full px-8 transition-all duration-300",
+                  currentPlan.isFeatured 
+                    ? "bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90 shadow-lg hover:shadow-xl"
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                )}
+              >
+                Get started
+                {currentPlan.isFeatured && <Sparkles className="w-4 h-4 ml-2" />}
+              </Button>
+            </a>
+            <a
+              href={`mailto:${config.resend.support.email}?subject=Book a call about ${currentPlan.name} Plan`}
+            >
+              <Button variant="link" className="text-secondary hover:text-primary">
+                or book a call
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+} 
