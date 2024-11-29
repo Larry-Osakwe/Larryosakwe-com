@@ -38,11 +38,11 @@ export const Newsletter = () => {
 
       <Container>
         <Title>
-          Join Our Daily{" "}
-          <GradientSpan>Newsletter</GradientSpan>
+          Stay{" "}
+          <GradientSpan>Updated</GradientSpan>
         </Title>
         <Description>
-          Lorem ipsum dolor sit amet consectetur.
+          Get the latest updates and news from me.
         </Description>
 
         <Form onSubmit={handleSubmit}>
