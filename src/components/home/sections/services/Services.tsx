@@ -62,7 +62,7 @@ const serviceList: ServiceProps[] = [
 
 export const Services = () => {
   return (
-    <Section>
+    <Section id="flarestack">
       <Grid>
         <div>
           <Title>

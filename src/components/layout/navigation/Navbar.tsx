@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
+import Link from "next/link"
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Products", href: "#products" },
+  { name: "FlareStack", href: "#flarestack" },
   { name: "Services", href: "#services" },
+  { name: "Projects", href: "#projects" },
   { name: "Blog", href: "#blog" },
   { name: "Contact", href: "#contact" },
 ]
@@ -65,12 +66,14 @@ export function Navbar() {
               <NavItem key={item.name} {...item} />
             ))}
             <motion.div style={{ width: buttonWidth }} className="ml-2">
-              <Button
-                className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
-                style={{ borderRadius: buttonBorderRadius.get() }}
-              >
-                Hire Me
-              </Button>
+              <Link href="#services">
+                <Button
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
+                  style={{ borderRadius: buttonBorderRadius.get() }}
+                >
+                  Hire Me
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -115,11 +118,13 @@ export function Navbar() {
                       {item.name}
                     </a>
                   ))}
-                  <Button
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
-                  >
-                    Hire Me
-                  </Button>
+                  <Link href="#services">
+                    <Button
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 font-semibold"
+                    >
+                      Hire Me
+                    </Button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>

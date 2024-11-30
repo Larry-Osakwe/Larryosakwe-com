@@ -27,7 +27,7 @@ const projects = [
   },
   {
     title: "PlayThis",
-    description: "Conquer your gaming backlog",
+    description: "Organize your gaming backlog then conquer it.",
     logo: PlayThisLogo,
     link: "https://play-this.com",
     color: "from-secondary/60 to-primary/60"
@@ -38,7 +38,7 @@ export const Projects = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <section className="container py-24 sm:py-32">
+    <section id="projects" className="container py-24 sm:py-32">
       <div className="mx-auto mb-16 flex flex-col items-center gap-4">
         <motion.h1 
           className="text-4xl md:text-5xl font-bold text-center flex items-center gap-3"
@@ -111,7 +111,7 @@ export const Projects = () => {
         ))}
       </motion.div>
 
-      <motion.div 
+      {/* <motion.div 
         className="mt-20 text-center"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ export const Projects = () => {
             View All Projects <ChevronRight className="ml-2 h-6 w-6" />
           </Button>
         </Link>
-      </motion.div>
+      </motion.div> */}
     </section>
   )
 }

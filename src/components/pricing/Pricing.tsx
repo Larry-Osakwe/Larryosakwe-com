@@ -16,7 +16,7 @@ export const Pricing = () => {
   const currentPlan = plan === "standard" ? standardPlan : proPlan
 
   return (
-    <section className="py-24 sm:py-32">
+    <section id="services" className="py-24 sm:py-32">
       <div className="container mb-16 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Want your <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">MVP</span> built for you?

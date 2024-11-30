@@ -33,7 +33,7 @@ const StyledImage = styled(Image)`
 
 export const Hero = () => {
   return (
-    <HeroSection>
+    <HeroSection id="about">
       <ImageWrapper>
         <StyledImage
           src="/hero-image.png"
