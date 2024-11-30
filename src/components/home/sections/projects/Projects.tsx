@@ -1,53 +1,53 @@
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 const projects = [
   {
-    title: "Project Alpha",
-    description: "A cutting-edge web application revolutionizing user experiences",
+    title: "FlareStack",
+    description: "The best Next.js Boilerplate for Your Next Project",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://project-alpha.com",
     color: "from-[#FF6B6B] to-[#4ECDC4]"
   },
   {
-    title: "Beta Mobile App",
-    description: "Transforming mobile interactions with intuitive design",
+    title: "FlareLabs",
+    description: "MVP subscription for everyone. Pause or cancel anytime.",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://beta-mobile.com",
     color: "from-[#F7B733] to-[#FC4A1A]"
   },
   {
-    title: "Gamma Analytics",
-    description: "Powerful data insights driving business decisions",
+    title: "PlayThis",
+    description: "Conquer your gaming backlog",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://gamma-analytics.com",
     color: "from-[#00F260] to-[#0575E6]"
   },
-  {
-    title: "Delta E-commerce",
-    description: "Seamless online shopping experiences for the modern consumer",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://delta-ecommerce.com",
-    color: "from-[#667eea] to-[#764ba2]"
-  },
-  {
-    title: "Epsilon AI",
-    description: "Artificial intelligence solutions for real-world challenges",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://epsilon-ai.com",
-    color: "from-[#ED4264] to-[#FFEDBC]"
-  },
-  {
-    title: "Zeta Cloud",
-    description: "Next-generation cloud infrastructure for scalable applications",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://zeta-cloud.com",
-    color: "from-[#C33764] to-[#1D2671]"
-  }
+  // {
+  //   title: "Delta E-commerce",
+  //   description: "Seamless online shopping experiences for the modern consumer",
+  //   logo: "/placeholder.svg?height=100&width=100",
+  //   link: "https://delta-ecommerce.com",
+  //   color: "from-[#667eea] to-[#764ba2]"
+  // },
+  // {
+  //   title: "Epsilon AI",
+  //   description: "Artificial intelligence solutions for real-world challenges",
+  //   logo: "/placeholder.svg?height=100&width=100",
+  //   link: "https://epsilon-ai.com",
+  //   color: "from-[#ED4264] to-[#FFEDBC]"
+  // },
+  // {
+  //   title: "Zeta Cloud",
+  //   description: "Next-generation cloud infrastructure for scalable applications",
+  //   logo: "/placeholder.svg?height=100&width=100",
+  //   link: "https://zeta-cloud.com",
+  //   color: "from-[#C33764] to-[#1D2671]"
+  // }
 ]
 
 export const Projects = () => {
@@ -62,7 +62,7 @@ export const Projects = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Innovative Projects
+          Released Projects
         </span>
       </motion.h1>
       <motion.div 
