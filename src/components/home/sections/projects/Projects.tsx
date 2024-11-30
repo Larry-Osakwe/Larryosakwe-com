@@ -4,6 +4,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 const projects = [
   {
@@ -11,62 +13,48 @@ const projects = [
     description: "The best Next.js Boilerplate for Your Next Project",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://project-alpha.com",
-    color: "from-[#FF6B6B] to-[#4ECDC4]"
+    color: "from-[#ff9a15] to-[#e26215]"
   },
   {
     title: "FlareLabs",
     description: "MVP subscription for everyone. Pause or cancel anytime.",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://beta-mobile.com",
-    color: "from-[#F7B733] to-[#FC4A1A]"
+    color: "from-[#ff9a15] to-[#e26215]"
   },
   {
     title: "PlayThis",
     description: "Conquer your gaming backlog",
     logo: "/placeholder.svg?height=100&width=100",
     link: "https://gamma-analytics.com",
-    color: "from-[#00F260] to-[#0575E6]"
-  },
-  // {
-  //   title: "Delta E-commerce",
-  //   description: "Seamless online shopping experiences for the modern consumer",
-  //   logo: "/placeholder.svg?height=100&width=100",
-  //   link: "https://delta-ecommerce.com",
-  //   color: "from-[#667eea] to-[#764ba2]"
-  // },
-  // {
-  //   title: "Epsilon AI",
-  //   description: "Artificial intelligence solutions for real-world challenges",
-  //   logo: "/placeholder.svg?height=100&width=100",
-  //   link: "https://epsilon-ai.com",
-  //   color: "from-[#ED4264] to-[#FFEDBC]"
-  // },
-  // {
-  //   title: "Zeta Cloud",
-  //   description: "Next-generation cloud infrastructure for scalable applications",
-  //   logo: "/placeholder.svg?height=100&width=100",
-  //   link: "https://zeta-cloud.com",
-  //   color: "from-[#C33764] to-[#1D2671]"
-  // }
+    color: "from-[#ff9a15] to-[#e26215]"
+  }
 ]
 
 export const Projects = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="container mx-auto px-4 py-24 bg-background text-foreground">
-      <motion.h1 
-        className="text-6xl font-extrabold mb-16 text-center"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Released Projects
-        </span>
-      </motion.h1>
+    <section className="container py-24 sm:py-32">
+      <div className="mx-auto mb-16 flex flex-col items-center gap-4">
+        <motion.h1 
+          className="text-4xl md:text-5xl font-bold text-center flex flex-col items-center gap-2 md:gap-4"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <span className="text-foreground">Released</span>
+          <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+            Projects
+          </span>
+        </motion.h1>
+        <p className="text-xl text-muted-foreground text-center max-w-2xl">
+          Here are some of my recent projects. Each one is crafted with attention to detail and modern best practices.
+        </p>
+      </div>
+
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -81,8 +69,11 @@ export const Projects = () => {
             onHoverStart={() => setHoveredIndex(index)}
             onHoverEnd={() => setHoveredIndex(null)}
           >
-            <Card className="bg-card text-card-foreground h-full flex flex-col justify-between overflow-hidden group">
-              <CardHeader className={`relative p-6 ${project.color} bg-gradient-to-br`}>
+            <Card className="bg-card text-card-foreground h-full flex flex-col justify-between overflow-hidden group border-2 border-border hover:border-secondary/50 transition-colors">
+              <CardHeader className={cn(
+                "relative p-6 bg-gradient-to-r",
+                project.color
+              )}>
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 <div className="relative z-10 flex flex-col items-center text-white">
                   <Image
@@ -102,9 +93,8 @@ export const Projects = () => {
               </CardContent>
               <CardFooter className="p-6">
                 <Button 
-                  variant="secondary" 
                   size="lg" 
-                  className="w-full text-lg font-semibold transition-all duration-300 hover:shadow-lg"
+                  className="w-full text-lg font-semibold transition-all duration-300 hover:shadow-lg bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90"
                   asChild
                 >
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
@@ -116,20 +106,23 @@ export const Projects = () => {
           </motion.div>
         ))}
       </motion.div>
+
       <motion.div 
         className="mt-20 text-center"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
       >
-        <Button 
-          size="lg" 
-          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xl px-10 py-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          View All Projects <ChevronRight className="ml-2 h-6 w-6" />
-        </Button>
+        <Link href="/projects">
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90 text-xl px-10 py-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            View All Projects <ChevronRight className="ml-2 h-6 w-6" />
+          </Button>
+        </Link>
       </motion.div>
-    </div>
+    </section>
   )
 }
 
