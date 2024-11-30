@@ -8,6 +8,7 @@ import { ScrollToTop } from "@/components/shared/navigation/ScrollToTop";
 import { Newsletter } from "@/components/home/sections/newsletter/Newsletter";
 import { Services } from "@/components/home/sections/services/Services";
 import { Pricing } from "@/components/pricing";
+import { Projects } from "@/components/home/sections/projects/Projects";
 
 export function HomeContent() {
   return (
@@ -16,6 +17,7 @@ export function HomeContent() {
       <Hero />
       <Services />
       <Pricing />
+      <Projects />
       <Newsletter />
       <Footer />
       <ScrollToTop />
