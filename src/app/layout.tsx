@@ -12,11 +12,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      {/* <OpenPanelComponent 
+      <OpenPanelComponent 
         clientId={process.env.OPEN_PANEL_CLIENT_ID || ''} 
         trackScreenViews={true}
         trackOutgoingLinks={true} 
-      /> */}
+      />
       <html lang="en" suppressHydrationWarning>
         <head />
         <body>
