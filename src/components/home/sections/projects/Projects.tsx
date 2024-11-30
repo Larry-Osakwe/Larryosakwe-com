@@ -5,29 +5,32 @@ import { ChevronRight, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Link from 'next/link'
+import FlareStackLogo from "@/components/home/sections/projects/images/flarestack-logo.png"
+import FlareLabsLogo from "@/components/home/sections/projects/images/flarelabs-logo.png"
+import PlayThisLogo from "@/components/home/sections/projects/images/playthis-logo.png"
 import { cn } from '@/lib/utils'
 
 const projects = [
   {
     title: "FlareStack",
     description: "The best Next.js Boilerplate for Your Next Project",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://project-alpha.com",
-    color: "from-[#ff9a15] to-[#e26215]"
+    logo: FlareStackLogo,
+    link: "https://flarestack.io",
+    color: "from-secondary/60 to-primary/60"
   },
   {
     title: "FlareLabs",
     description: "MVP subscription for everyone. Pause or cancel anytime.",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://beta-mobile.com",
-    color: "from-[#ff9a15] to-[#e26215]"
+    logo: FlareLabsLogo,
+    link: "https://flarelabs.app",
+    color: "from-secondary/60 to-primary/60"
   },
   {
     title: "PlayThis",
     description: "Conquer your gaming backlog",
-    logo: "/placeholder.svg?height=100&width=100",
-    link: "https://gamma-analytics.com",
-    color: "from-[#ff9a15] to-[#e26215]"
+    logo: PlayThisLogo,
+    link: "https://play-this.com",
+    color: "from-secondary/60 to-primary/60"
   }
 ]
 
@@ -38,7 +41,7 @@ export const Projects = () => {
     <section className="container py-24 sm:py-32">
       <div className="mx-auto mb-16 flex flex-col items-center gap-4">
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold text-center flex flex-col items-center gap-2 md:gap-4"
+          className="text-4xl md:text-5xl font-bold text-center flex items-center gap-3"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -72,7 +75,8 @@ export const Projects = () => {
             <Card className="bg-card text-card-foreground h-full flex flex-col justify-between overflow-hidden group border-2 border-border hover:border-secondary/50 transition-colors">
               <CardHeader className={cn(
                 "relative p-6 bg-gradient-to-r",
-                project.color
+                project.color,
+                hoveredIndex === index && "from-secondary to-primary"
               )}>
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 <div className="relative z-10 flex flex-col items-center text-white">
