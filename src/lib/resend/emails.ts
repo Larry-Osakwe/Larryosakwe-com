@@ -10,7 +10,7 @@ import { config } from '@/config';
  * and includes:
  * - Purchase confirmation details
  * - Link to dashboard
- * - Product information
+ * - Product information (name, price, etc.)
  * 
  * @param customerEmail - The recipient's email address
  * @param productName - Name of the purchased product/plan
