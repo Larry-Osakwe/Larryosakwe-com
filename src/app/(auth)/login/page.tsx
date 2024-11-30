@@ -1,10 +1,9 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { UserAuthForm } from "@/components/auth/forms";
-import { AuthLayout } from "@/components/auth/common";
 import { redirect } from "next/navigation";
 import { getSEOTags } from "@/lib/seo/seo";
 import { getCurrentUser } from "@/lib/auth";
+import { AuthFormWrapper } from "@/components/auth/common/AuthFormWrapper";
 
 export const metadata: Metadata = getSEOTags({
   title: "Login",
@@ -24,13 +23,11 @@ export default async function LoginPage() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <AuthLayout
+      <AuthFormWrapper
+        type="login"
         heading="Welcome back"
         subheading="Enter your credentials to access your account"
-        showImage={true}
-      >
-        <UserAuthForm type="login" />
-      </AuthLayout>
+      />
     </Suspense>
   );
 }

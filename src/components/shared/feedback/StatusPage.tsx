@@ -1,3 +1,5 @@
+"use client";
+
 import tw, { styled } from 'twin.macro';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail } from "lucide-react";
