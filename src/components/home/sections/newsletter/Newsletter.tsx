@@ -55,10 +55,12 @@ export const Newsletter = () => {
 
       toast({
         title: "Success!",
-        description: "Thank you for subscribing to our newsletter!",
+        description: data.message,
       });
       
-      setEmail('');
+      if (data.message === 'Successfully subscribed to the newsletter!') {
+        setEmail('');
+      }
     } catch (err) {
       toast({
         variant: "destructive",

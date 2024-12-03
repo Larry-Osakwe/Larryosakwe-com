@@ -16,35 +16,35 @@ export async function POST(request: Request) {
     // Initialize Supabase client
     const supabase = createClient();
 
-    // Check if email already exists
-    const { data: existingLead } = await supabase
+    // Try to upsert the lead
+    const { data, error } = await supabase
       .from('leads')
-      .select('email')
-      .eq('email', email)
-      .single();
-
-    if (existingLead) {
-      return NextResponse.json(
-        { message: "You're already subscribed to our newsletter!" },
-        { status: 200 }
-      );
-    }
-
-    // Insert the lead into the database
-    const { error } = await supabase
-      .from('leads')
-      .insert([{ email }]);
+      .upsert(
+        { email },
+        { 
+          onConflict: 'email',
+          ignoreDuplicates: true 
+        }
+      )
+      .select('created_at');
 
     if (error) {
-      console.error('Error inserting lead:', error);
+      console.error('Error processing subscription:', error);
       return NextResponse.json(
-        { error: 'Failed to subscribe. Please try again.' },
+        { error: 'Failed to process subscription. Please try again.' },
         { status: 500 }
       );
     }
 
+    // If no rows were affected, it was a duplicate
+    const isNewSubscription = data && data.length > 0;
+
     return NextResponse.json(
-      { message: 'Successfully subscribed to the newsletter!' },
+      { 
+        message: isNewSubscription 
+          ? 'Successfully subscribed to the newsletter!' 
+          : "You're already subscribed to our newsletter!"
+      },
       { status: 200 }
     );
 
