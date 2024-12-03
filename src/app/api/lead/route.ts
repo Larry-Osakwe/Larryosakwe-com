@@ -16,6 +16,20 @@ export async function POST(request: Request) {
     // Initialize Supabase client
     const supabase = createClient();
 
+    // Check if email already exists
+    const { data: existingLead } = await supabase
+      .from('leads')
+      .select('email')
+      .eq('email', email)
+      .single();
+
+    if (existingLead) {
+      return NextResponse.json(
+        { message: "You're already subscribed to our newsletter!" },
+        { status: 200 }
+      );
+    }
+
     // Insert the lead into the database
     const { error } = await supabase
       .from('leads')
