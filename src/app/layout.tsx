@@ -2,6 +2,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme";
 import { OpenPanelComponent } from '@openpanel/nextjs';
 import { getSEOTags } from "@/lib/seo/seo";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = getSEOTags();
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

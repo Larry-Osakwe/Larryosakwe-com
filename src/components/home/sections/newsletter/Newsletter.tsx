@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import tw, { styled } from 'twin.macro';
 
 const NewsletterSection = styled.section`
@@ -26,10 +30,44 @@ const Form = styled.form`
 const StyledInput = styled(Input)`
   ${tw`bg-muted/50 dark:bg-muted/80`}
 `;
+
 export const Newsletter = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Subscribed!");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to subscribe');
+      }
+
+      toast({
+        title: "Success!",
+        description: "Thank you for subscribing to our newsletter!",
+      });
+      
+      setEmail('');
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: err instanceof Error ? err.message : 'Failed to subscribe',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -47,10 +85,17 @@ export const Newsletter = () => {
 
         <Form onSubmit={handleSubmit}>
           <StyledInput
+            type="email"
             placeholder="name@gmail.com"
             aria-label="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={isLoading}
           />
-          <Button>Subscribe</Button>
+          <Button disabled={isLoading}>
+            {isLoading ? 'Subscribing...' : 'Subscribe'}
+          </Button>
         </Form>
       </Container>
 
