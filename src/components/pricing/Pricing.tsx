@@ -6,14 +6,53 @@ import { ArrowRight, Calendar, Sparkles, Zap } from 'lucide-react'
 import { useState } from "react"
 import { config } from "@/config"
 import { cn } from "@/lib/utils"
+import { Dialog, DialogDescription, DialogHeader, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
+import Link from "next/link"
 
 export const Pricing = () => {
   const [plan, setPlan] = useState<"standard" | "pro">("standard")
-  
+
   const standardPlan = config.stripe.plans[0]
   const proPlan = config.stripe.plans[1]
-  
+
   const currentPlan = plan === "standard" ? standardPlan : proPlan
+
+  const AffiliateCard = () => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors cursor-pointer">
+          <CardContent className="p-6">
+            <h3 className="text-xl font-semibold mb-2">Refer a founder & earn</h3>
+            <p className="text-muted-foreground text-sm mb-4">
+              Know someone who needs ongoing development? Get 5% monthly commission.
+            </p>
+            <ArrowRight className="text-secondary" />
+          </CardContent>
+        </Card>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Coming Soon to FlareLabs</DialogTitle>
+          <DialogDescription>
+            The affiliate program will be available when FlareLabs launches. Want to be notified?
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <p className="text-sm text-muted-foreground">
+            FlareLabs is launching soon with a full affiliate program. Early supporters will get:
+            <ul className="list-disc list-inside mt-2">
+              <li>Priority access to the affiliate program</li>
+              <li>5% commission on all referrals</li>
+              <li>Early access to new features</li>
+            </ul>
+          </p>
+          <Button asChild>
+            <Link href="#newsletter">Join the waitlist</Link>
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 
   return (
     <section id="services" className="py-24 sm:py-32">
@@ -32,7 +71,7 @@ export const Pricing = () => {
           <CardContent className="p-8">
             {/* Decorative Blob */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-secondary rounded-full blur-2xl opacity-50" />
-            
+
             <Badge variant="secondary" className="bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90 mb-6">
               Limited spots available
             </Badge>
@@ -44,7 +83,7 @@ export const Pricing = () => {
             </h2>
 
             <div className="space-y-6">
-              <a 
+              <a
                 href={config.scheduler.defaultConfig.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -65,7 +104,7 @@ export const Pricing = () => {
                 </Card>
               </a>
 
-              <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
+              {/* <Card className="bg-card border-border rounded-xl hover:bg-muted transition-colors">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Refer a founder & earn</h3>
                   <p className="text-muted-foreground text-sm mb-4">
@@ -73,7 +112,9 @@ export const Pricing = () => {
                   </p>
                   <ArrowRight className="text-secondary" />
                 </CardContent>
-              </Card>
+              </Card> */}
+              {/* <ComingSoonDialog /> */}
+              <AffiliateCard />
             </div>
           </CardContent>
         </Card>
@@ -110,7 +151,7 @@ export const Pricing = () => {
             <div className="flex items-baseline gap-1 mb-2">
               <span className={cn(
                 "text-5xl font-bold",
-                currentPlan.isFeatured 
+                currentPlan.isFeatured
                   ? "bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"
                   : "text-foreground"
               )}>
@@ -128,8 +169,8 @@ export const Pricing = () => {
                 <div key={name} className="flex items-center gap-2">
                   <div className={cn(
                     "w-1 h-1 rounded-full",
-                    currentPlan.isFeatured 
-                      ? "bg-gradient-to-r from-secondary to-primary" 
+                    currentPlan.isFeatured
+                      ? "bg-gradient-to-r from-secondary to-primary"
                       : "bg-secondary"
                   )} />
                   <span>{name}</span>
@@ -145,11 +186,11 @@ export const Pricing = () => {
               rel="noopener noreferrer"
               className="rounded-full"
             >
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className={cn(
                   "rounded-full px-8 transition-all duration-300",
-                  currentPlan.isFeatured 
+                  currentPlan.isFeatured
                     ? "bg-gradient-to-r from-secondary to-primary text-secondary-foreground hover:from-secondary/90 hover:to-primary/90 shadow-lg hover:shadow-xl"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
                 )}
